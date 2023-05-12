@@ -13,6 +13,7 @@
             hide-details="auto"
             class="mb-4"
             required
+            clearable
           >
           </v-text-field>
           <v-text-field
@@ -24,6 +25,7 @@
             hide-details="auto"
             class="mb-4"
             required
+            clearable
           >
           </v-text-field>
           <p class="text-center error--text text-subtitle-2">{{ errorMsg }}</p>
@@ -76,7 +78,7 @@ export default {
             this.errorMsg = '로그인을 실패하였습니다.';
           }
         } catch (error) {
-          console.log(error);
+          this.errorMsg = '로그인을 실패하였습니다.';
         } finally {
           this.loading = false;
         }
