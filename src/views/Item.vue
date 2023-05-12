@@ -6,6 +6,7 @@
           <v-img
             class="title-img"
             :src="item.images?.basicImage"
+            @click="openUrl"
             width="550"
           ></v-img>
           <div class="title-text text-h6 mt-6">{{ item.name }}</div>
@@ -33,6 +34,7 @@
         <ResultDialog
           :dialog="dialog"
           :result="result"
+          :errorMsg="errorMsg"
           @close="dialog = false"
         />
       </v-col>
@@ -60,6 +62,7 @@ export default {
       loading: false,
       dialog: false,
       result: '',
+      errorMsg: '',
     };
   },
   methods: {
@@ -67,14 +70,19 @@ export default {
       this.loading = true;
       try {
         let data = await editItem(this.item.itemid, this.content);
-        console.log(data);
         this.result = data.status == 200 ? 'success' : 'fail';
-      } catch (error) {
-        console.log(error);
+      } catch ({ response }) {
+        this.errorMsg = response.data.message;
       } finally {
         this.loading = false;
         this.dialog = true;
       }
+    },
+    openUrl() {
+      let url = `
+      http://www.10x10.co.kr/shopping/category_prd.asp?itemid=${this.item.itemid}&disp=${this.item.categories[0].catecode}&pBtr=${this.item.brandId}
+      `;
+      window.open(url, '_blank', 'noreferrer');
     },
   },
 };
@@ -82,6 +90,9 @@ export default {
 
 //
 <style scope>
+.title-img {
+  cursor: pointer;
+}
 [text-narrow] {
   line-height: 1.5 !important;
 }
