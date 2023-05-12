@@ -40,6 +40,17 @@
         >
           수정하기
         </v-btn>
+        <v-btn
+          class="mt-4 mb-8"
+          color="primary"
+          dark
+          block
+          large
+          outlined
+          @click="openUrl"
+        >
+          텐바이텐에 확인하러 가기
+        </v-btn>
         <ResultDialog
           :dialog="dialog"
           :result="result"
