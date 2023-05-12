@@ -10,7 +10,10 @@
           >
             성공!
           </span>
-          <span v-else class="red--text font-weight-bold text--lighten-1">
+          <span
+            v-else-if="'fail'"
+            class="red--text font-weight-bold text--lighten-1"
+          >
             실패
           </span>
         </p>
