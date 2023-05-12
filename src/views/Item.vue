@@ -18,7 +18,7 @@
                 ></v-progress-circular>
               </v-row> </template
           ></v-img>
-          <div class="title-text text-h6 mt-6">{{ item.name }}</div>
+          <div class="title-text text-h6 mt-3">{{ item.name }}</div>
         </div>
         <p class="mt-4 mb-0 text-subtitle-2">상품 상세 설명</p>
         <v-textarea
