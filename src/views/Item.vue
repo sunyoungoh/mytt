@@ -32,6 +32,8 @@
         ></v-textarea>
         <v-btn
           color="primary"
+          elevation="0"
+          height="50"
           dark
           block
           large
@@ -43,6 +45,7 @@
         <v-btn
           class="mt-4 mb-8"
           color="primary"
+          height="50"
           dark
           block
           large
