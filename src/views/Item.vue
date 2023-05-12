@@ -43,7 +43,7 @@
           수정하기
         </v-btn>
         <v-btn
-          class="mt-4 mb-8"
+          class="mt-3 mb-8"
           color="primary"
           height="50"
           dark
@@ -115,6 +115,9 @@ export default {
 <style scope>
 .title-img {
   cursor: pointer;
+}
+.title-text {
+  line-height: 1.25 !important;
 }
 [text-narrow] {
   line-height: 1.5 !important;
