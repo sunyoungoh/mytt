@@ -4,10 +4,19 @@
       <v-col cols="auto" class="px-4">
         <div class="title">
           <v-img
-            class="title-img"
+            class="title-img grey lighten-2"
             :src="item.images?.basicImage"
             @click="openUrl"
+            aspect-ratio="1"
             width="550"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row> </template
           ></v-img>
           <div class="title-text text-h6 mt-6">{{ item.name }}</div>
         </div>
