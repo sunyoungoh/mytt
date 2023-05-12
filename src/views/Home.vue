@@ -12,7 +12,15 @@
         </template>
       </v-row>
       <v-row justify="center">
-        <v-col cols="auto" v-for="(item, i) in items" :key="i">
+        <v-col
+          cols="6"
+          sm="4"
+          md="3"
+          lg="3"
+          class="pa-2"
+          v-for="(item, i) in items"
+          :key="i"
+        >
           <router-link :to="'/item/' + item.itemId">
             <ItemCard :item-id="item.itemId" :item-name="item.name" />
           </router-link>

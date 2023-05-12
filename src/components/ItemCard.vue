@@ -1,7 +1,7 @@
 <template>
-  <v-card max-width="200" min-height="350px">
-    <v-img :src="item.images?.basicImage" height="200px"></v-img>
-    <v-card-title class="text-subtitle-1 mb-3">
+  <v-card height="100%">
+    <v-img :src="item.images?.basicImage"></v-img>
+    <v-card-title class="text-subtitle-2 pb-3">
       {{ itemName }}
     </v-card-title>
   </v-card>
