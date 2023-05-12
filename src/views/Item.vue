@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="auto">
+      <v-col cols="auto" class="px-4">
         <div class="title">
           <v-img
             class="title-img"

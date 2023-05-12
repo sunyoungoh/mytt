@@ -6,18 +6,19 @@
           <v-col cols="12">
             <h2 class="text-center">
               {{ $store.state.brandName }}님, 등록된 상품은 총
-              {{ itemsCount }}개입니다.
+              <span class="red--text text--light-1">{{ itemsCount }}</span
+              >개입니다.
             </h2>
           </v-col>
         </template>
       </v-row>
-      <v-row justify="center">
+      <v-row justify="center" class="px-2">
         <v-col
           cols="6"
           sm="4"
           md="3"
           lg="3"
-          class="pa-2"
+          class="px-2"
           v-for="(item, i) in items"
           :key="i"
         >

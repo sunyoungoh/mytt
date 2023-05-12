@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100%">
+  <v-card height="100%" elevation="0">
     <v-img :src="item.images?.basicImage"></v-img>
     <v-card-title class="text-subtitle-2 pb-3">
       {{ itemName }}
