@@ -30,7 +30,14 @@
           filled
           background-color="grey lighten-4"
         ></v-textarea>
-        <v-btn color="primary" dark block large @click="editItem">
+        <v-btn
+          color="primary"
+          dark
+          block
+          large
+          :loading="loading"
+          @click="editItem"
+        >
           수정하기
         </v-btn>
         <ResultDialog
