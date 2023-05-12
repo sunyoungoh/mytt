@@ -37,6 +37,11 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    login({ commit }, payload) {
+      commit('setApiKey', payload.apiKey);
+      commit('setBrandId', payload.brandId);
+      commit('setBrandName', payload.brandName);
+    },
     logout({ commit }) {
       commit('clearApiKey');
       commit('clearBrandId');

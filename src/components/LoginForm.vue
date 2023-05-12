@@ -70,9 +70,11 @@ export default {
         try {
           let res = await getBrandInfo(this.apiKey);
           if (res.status == 200 && res.data.brandid == this.brandId) {
-            this.$store.commit('setApiKey', this.apiKey);
-            this.$store.commit('setBrandId', res.data.brandid);
-            this.$store.commit('setBrandName', res.data.BrandNameKor);
+            this.$store.dispatch('login', {
+              apiKey: this.apiKey,
+              brandId: res.data.brandid,
+              brandName: res.data.BrandNameKor,
+            });
             this.$router.push({ path: '/' });
           } else {
             this.errorMsg = '로그인을 실패하였습니다.';
