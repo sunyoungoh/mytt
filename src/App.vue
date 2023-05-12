@@ -1,19 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="30"
-        />
-      </div>
-      <!-- <v-spacer></v-spacer> -->
-    </v-app-bar>
-
+    <AppBar />
     <v-main>
       <router-view />
     </v-main>
@@ -21,9 +8,13 @@
 </template>
 
 <script>
+import AppBar from './components/AppBar.vue';
+
 export default {
   name: 'App',
-
+  components: {
+    AppBar,
+  },
   data: () => ({
     //
   }),

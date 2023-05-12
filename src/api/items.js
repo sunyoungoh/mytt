@@ -1,15 +1,9 @@
 import { instance, instanceAuth } from './index';
 import store from '@/store/index';
 
-// const getBrandInfo = apiKey => {
-//   return instance.get('/tenbyten/brandinfo', {
-//     headers: { Authorization: `bearer ${apiKey}` },
-//   });
-// };
-
-const getBrandInfo = () => {
+const getBrandInfo = apiKey => {
   return instance.get('/tenbyten/brandinfo', {
-    headers: { Authorization: `bearer ${process.env.VUE_APP_API_KEY}` },
+    headers: { Authorization: `bearer ${apiKey}` },
   });
 };
 

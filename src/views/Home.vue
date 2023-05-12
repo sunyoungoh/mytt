@@ -1,22 +1,15 @@
 <template>
   <div class="home">
     <v-container>
-      <v-row justify="center">
-        <v-spacer></v-spacer>
-        <v-col>
-          <v-input v-model="apiKey"></v-input>
-          <v-btn
-            class="mt-6 font-weight-bold"
-            @click="getItems"
-            x-large
-            outlined
-            height="56"
-            min-width="300"
-            max-width="400"
-            >조회하기
-          </v-btn>
-        </v-col>
-        <v-spacer></v-spacer>
+      <v-row justify="center" class="mt-6">
+        <template v-if="$store.state.brandName !== ''">
+          <v-col cols="12">
+            <h2 class="text-center">
+              {{ $store.state.brandName }}님, 등록된 상품은 총
+              {{ itemsCount }}개입니다.
+            </h2>
+          </v-col>
+        </template>
       </v-row>
       <v-row justify="center">
         <v-col cols="auto" v-for="(item, i) in items" :key="i">
@@ -31,27 +24,29 @@
 
 <script>
 import ItemCard from '@/components/ItemCard.vue';
-import { getBrandInfo, getItems } from '@/api/items';
+import { getItems } from '@/api/items';
 
 export default {
   name: 'Home',
   components: {
     ItemCard,
   },
+  async mounted() {
+    if (this.$store.getters.isLogin) {
+      let { data } = await getItems();
+      this.items = data.outPutValue.items;
+    } else {
+      this.$router.push({ path: '/login' });
+    }
+  },
   data() {
     return {
-      apiKey: '',
       items: '',
     };
   },
-  methods: {
-    async getItems() {
-      let res = await getBrandInfo(this.apiKey);
-      if (res.status == 200) {
-        this.$store.commit('setBrandId', res.data.brandid);
-        let { data } = await getItems();
-        this.items = data.outPutValue.items;
-      }
+  computed: {
+    itemsCount() {
+      return this.items.length;
     },
   },
 };
