@@ -7,10 +7,11 @@ const getBrandInfo = apiKey => {
   });
 };
 
-const getItems = () => {
+const getItems = count => {
   return instanceAuth.get('/tenbyten/items', {
     params: {
       brandId: store.state.brandId,
+      count: count,
     },
   });
 };

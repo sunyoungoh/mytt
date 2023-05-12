@@ -5,7 +5,7 @@
         <template v-if="$store.state.brandName !== ''">
           <v-col cols="12">
             <h2 class="text-center">
-              {{ $store.state.brandName }}님, 등록된 상품은 총
+              {{ $store.state.brandName }}님, 전시상품은 총
               <span class="red--text text--light-1">{{ itemsCount }}</span
               >개입니다.
             </h2>
@@ -18,7 +18,7 @@
           sm="4"
           md="3"
           lg="3"
-          class="px-2"
+          class="pa-2"
           v-for="(item, i) in items"
           :key="i"
         >
@@ -42,8 +42,17 @@ export default {
   },
   async mounted() {
     if (this.$store.getters.isLogin) {
-      let { data } = await getItems();
-      this.items = data.outPutValue.items;
+      // 한 페이지당 100개씩 가져오기 때문에 페이지수로 호출
+      let count = 1;
+      let { data } = await getItems(count);
+      this.items = data;
+
+      //100개가 넘으면 다음페이지 호출
+      while (this.items.length % 100 == 0) {
+        count++;
+        let { data } = await getItems(count);
+        this.items.push(...data);
+      }
     } else {
       this.$router.push({ path: '/login' });
     }
