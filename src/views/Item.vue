@@ -25,7 +25,12 @@
             <SalesChip :salesCode="salesCode" class="d-inline" />
           </div>
         </div>
-        <p class="mt-4 mb-0 text-subtitle-2">상품 상세 설명</p>
+        <div class="label">
+          <p class="mt-4 mb-0 label-title">상품 상세 설명</p>
+          <p class="grey--text label-desc mb-1">
+            HTML태그와 TEXT를 입력할 수 있습니다.
+          </p>
+        </div>
         <v-textarea
           v-model="content"
           hide-details
@@ -133,5 +138,13 @@ export default {
 }
 [text-narrow] {
   line-height: 1.5 !important;
+}
+.label-title {
+  font-weight: 500;
+  font-size: 0.938rem;
+}
+.label-desc {
+  font-size: 0.75rem;
+  letter-spacing: -0.01rem;
 }
 </style>
