@@ -17,6 +17,16 @@ header .btns a {
   font-size: 13px !important;
 }
 
+/* InputLabel */
+.label-title {
+  font-weight: 500;
+}
+
+.label-desc {
+  font-size: 0.75rem;
+  letter-spacing: -0.01rem;
+}
+
 .v-btn {
   letter-spacing: 0.01rem !important;
 }

@@ -1,19 +1,6 @@
 <template>
   <v-card height="100%" elevation="0" tile>
-    <v-img
-      :src="item.images?.basicImage"
-      aspect-ratio="1"
-      class="grey lighten-2"
-    >
-      <template v-slot:placeholder>
-        <v-row class="fill-height ma-0" align="center" justify="center">
-          <v-progress-circular
-            indeterminate
-            color="grey lighten-5"
-          ></v-progress-circular>
-        </v-row>
-      </template>
-    </v-img>
+    <BasicImage :src="item.images?.basicImage" />
     <v-card-title class="pt-2 pb-5 px-0 card-title d-block">
       {{ itemName }}
       <SalesChip :salesCode="salesCode" class="mt-1" />
@@ -24,10 +11,12 @@
 <script>
 import { getItem } from '@/api/items';
 import SalesChip from '@/components/SalesChip.vue';
+import BasicImage from '@/components/BasicImage.vue';
 
 export default {
   components: {
     SalesChip,
+    BasicImage,
   },
   props: {
     itemId: {

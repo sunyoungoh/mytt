@@ -3,21 +3,7 @@
     <v-row justify="center">
       <v-col cols="auto" class="py-4">
         <div class="title">
-          <v-img
-            class="title-img grey lighten-2"
-            :src="item.images?.basicImage"
-            @click="openUrl"
-            aspect-ratio="1"
-            width="550"
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row> </template
-          ></v-img>
+          <BasicImage :src="item.images?.basicImage" />
           <div class="title-text mt-3">
             <span>
               {{ item.name }}
@@ -25,12 +11,10 @@
             <SalesChip :salesCode="salesCode" class="d-inline" />
           </div>
         </div>
-        <div class="label">
-          <p class="mt-4 mb-0 label-title">상품 상세 설명</p>
-          <p class="grey--text label-desc mb-1">
-            HTML태그와 TEXT를 입력할 수 있습니다.
-          </p>
-        </div>
+        <InputLabel>
+          <template #title> 상품 상세 설명</template>
+          <template #desc> HTML태그와 TEXT를 입력할 수 있습니다.</template>
+        </InputLabel>
         <v-textarea
           v-model="content"
           flat
@@ -74,14 +58,18 @@
 </template>
 
 <script>
-import ResultDialog from '@/components/ResultDialog.vue';
 import { getItem, editItem } from '@/api/items';
+import ResultDialog from '@/components/ResultDialog.vue';
+import BasicImage from '@/components/BasicImage.vue';
 import SalesChip from '@/components/SalesChip.vue';
+import InputLabel from '@/components/InputLabel.vue';
 
 export default {
   components: {
     ResultDialog,
     SalesChip,
+    InputLabel,
+    BasicImage,
   },
   async mounted() {
     let { data } = await getItem(this.$route.params.id);
@@ -123,13 +111,12 @@ export default {
 };
 </script>
 
-//
 <style scope>
 .title-img {
   cursor: pointer;
 }
 .title-text {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.3;
   letter-spacing: 0;
   font-weight: 600;
@@ -137,14 +124,7 @@ export default {
 [text-narrow] {
   line-height: 1.5 !important;
 }
-.label-title {
-  font-weight: 500;
-  font-size: 0.938rem;
-}
-.label-desc {
-  font-size: 0.75rem;
-  letter-spacing: -0.01rem;
-}
+
 .theme--light.v-text-field--outlined:not(.v-input--is-focused):not(
     .v-input--has-state
   )
