@@ -48,5 +48,6 @@ export default {
 .card-title {
   line-height: 1.3;
   font-size: 0.875rem;
+  font-weight: 400;
 }
 </style>
