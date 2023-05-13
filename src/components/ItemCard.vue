@@ -14,9 +14,9 @@
         </v-row>
       </template>
     </v-img>
-    <v-card-title class="pt-2 pb-3 px-0 card-title">
+    <v-card-title class="pt-2 pb-3 px-0 card-title d-block">
       {{ itemName }}
-      <SalesChip :salesCode="salesCode" />
+      <SalesChip :salesCode="salesCode" class="mt-1" />
     </v-card-title>
   </v-card>
 </template>
@@ -54,7 +54,6 @@ export default {
 
 <style>
 .card-title {
-  display: inline-block;
   line-height: 1.3;
   font-size: 0.875rem;
   font-weight: 400;

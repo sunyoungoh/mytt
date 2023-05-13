@@ -77,7 +77,7 @@ export default {
 <style scoped>
 @media screen and (max-width: 768px) {
   h2 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 }
 a {

@@ -19,7 +19,9 @@
               </v-row> </template
           ></v-img>
           <div class="title-text mt-3">
-            {{ item.name }}
+            <span class="mr-1">
+              {{ item.name }}
+            </span>
             <SalesChip :salesCode="salesCode" />
           </div>
         </div>
@@ -124,6 +126,7 @@ export default {
   cursor: pointer;
 }
 .title-text {
+  display: inline-flex;
   font-size: 1.125rem;
   line-height: 1.3;
   letter-spacing: 0;

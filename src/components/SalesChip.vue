@@ -43,9 +43,10 @@ export default {
 
 <style>
 .chip {
-  display: inline-block;
   position: relative;
   bottom: 1px;
-  margin-left: 1px;
+}
+.v-chip.v-size--x-small {
+  height: 18px !important;
 }
 </style>

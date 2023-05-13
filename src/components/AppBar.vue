@@ -46,6 +46,7 @@ export default {
 <style>
 h3.logo {
   font-family: 'Roboto';
+  font-size: 1.125rem;
 }
 .v-toolbar__content {
   border-bottom: 1px solid #e7e7e7 !important;
