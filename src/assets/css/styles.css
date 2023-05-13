@@ -19,6 +19,8 @@ header .btns a {
 
 /* InputLabel */
 .label-title {
+  font-size: 1rem;
+  letter-spacing: -0.01rem;
   font-weight: 500;
 }
 
