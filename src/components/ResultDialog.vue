@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="300">
     <v-card>
-      <v-card-title class="justify-center pt-5">
+      <v-card-title class="justify-center pt-6">
         <p class="text-center mb-0">
           수정
           <span
@@ -21,7 +21,7 @@
       <v-card-text v-if="errorMsg" class="text-center">
         {{ errorMsg }}
       </v-card-text>
-      <v-card-actions class="pb-3">
+      <v-card-actions class="pb-4">
         <v-spacer></v-spacer>
         <v-btn color="grey darken-3" text @click="$emit('close')"> 닫기 </v-btn>
         <v-spacer></v-spacer>

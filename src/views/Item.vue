@@ -24,28 +24,30 @@
           auto-grow
           outlined
         ></v-textarea>
-        <v-btn
-          color="primary"
-          elevation="0"
-          height="48"
-          block
-          large
-          :loading="loading"
-          @click="editItem"
-        >
-          수정하기
-        </v-btn>
-        <v-btn
-          class="mt-2"
-          color="primary"
-          height="48"
-          block
-          large
-          outlined
-          @click="openUrl"
-        >
-          텐바이텐에 확인하러 가기
-        </v-btn>
+        <div class="btns mb-6">
+          <v-btn
+            color="primary"
+            elevation="0"
+            height="48"
+            block
+            large
+            :loading="loading"
+            @click="editItem"
+          >
+            수정하기
+          </v-btn>
+          <v-btn
+            class="mt-2"
+            color="primary"
+            height="48"
+            block
+            large
+            outlined
+            @click="openUrl"
+          >
+            텐바이텐에 확인하러 가기
+          </v-btn>
+        </div>
         <ResultDialog
           :dialog="dialog"
           :result="result"
