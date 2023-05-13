@@ -46,5 +46,6 @@ export default {
   display: inline-block;
   position: relative;
   bottom: 1px;
+  margin-left: 1px;
 }
 </style>
