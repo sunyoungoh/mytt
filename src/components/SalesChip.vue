@@ -43,7 +43,7 @@ export default {
 
 <style>
 .chip {
-  display: inline;
+  display: inline-block;
   position: relative;
   bottom: 1px;
 }

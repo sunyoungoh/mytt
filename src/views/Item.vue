@@ -82,7 +82,7 @@ export default {
     let { data } = await getItem(this.$route.params.id);
     this.item = data.outPutValue;
     this.content = data.outPutValue.content;
-    this.salesCode = this.$route.params.code;
+    this.salesCode = this.$route.params.salesCode;
   },
   data() {
     return {

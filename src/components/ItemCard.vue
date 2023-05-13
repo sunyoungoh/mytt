@@ -56,6 +56,7 @@ export default {
 
 <style>
 .card-title {
+  display: inline-block;
   line-height: 1.3;
   font-size: 0.875rem;
   font-weight: 400;
