@@ -120,6 +120,7 @@ export default {
   font-size: 1.125rem;
   line-height: 1.25 !important;
   letter-spacing: 0;
+  font-weight: 600;
 }
 [text-narrow] {
   line-height: 1.5 !important;
