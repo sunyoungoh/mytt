@@ -125,7 +125,7 @@ export default {
 }
 .title-text {
   font-size: 1.125rem;
-  line-height: 1.25 !important;
+  line-height: 1.3;
   letter-spacing: 0;
   font-weight: 600;
 }
