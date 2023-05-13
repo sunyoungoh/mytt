@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container>
-      <v-row justify="center" class="mt-6">
+      <v-row justify="center" class="mt-4 mt-md-6">
         <template v-if="$store.state.brandName !== ''">
           <v-col cols="12">
             <h2 class="text-center">
@@ -77,7 +77,7 @@ export default {
 <style scoped>
 @media screen and (max-width: 768px) {
   h2 {
-    font-size: 1.375rem;
+    font-size: 1.25rem;
   }
 }
 a {
