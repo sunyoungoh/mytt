@@ -14,7 +14,7 @@
         </v-row>
       </template>
     </v-img>
-    <v-card-title class="text-subtitle-2 pt-2 pb-3 px-0">
+    <v-card-title class="pt-2 pb-3 px-0 card-title">
       {{ itemName }}
     </v-card-title>
   </v-card>
@@ -44,4 +44,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.card-title {
+  line-height: 1.3;
+  font-size: 0.875rem;
+}
+</style>

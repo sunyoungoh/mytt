@@ -1,0 +1,6 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+
+.v-btn{
+  letter-spacing: 0.02rem !important;
+}

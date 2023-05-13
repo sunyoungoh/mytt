@@ -18,7 +18,7 @@
                 ></v-progress-circular>
               </v-row> </template
           ></v-img>
-          <div class="title-text text-h6 mt-3">{{ item.name }}</div>
+          <div class="title-text mt-3">{{ item.name }}</div>
         </div>
         <p class="mt-4 mb-0 text-subtitle-2">상품 상세 설명</p>
         <v-textarea
@@ -33,7 +33,7 @@
         <v-btn
           color="primary"
           elevation="0"
-          height="50"
+          height="48"
           dark
           block
           large
@@ -43,9 +43,9 @@
           수정하기
         </v-btn>
         <v-btn
-          class="mt-3 mb-8"
+          class="mt-2 mb-8"
           color="primary"
-          height="50"
+          height="48"
           dark
           block
           large
@@ -117,7 +117,9 @@ export default {
   cursor: pointer;
 }
 .title-text {
+  font-size: 1.125rem;
   line-height: 1.25 !important;
+  letter-spacing: 0;
 }
 [text-narrow] {
   line-height: 1.5 !important;

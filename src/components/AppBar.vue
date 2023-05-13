@@ -2,7 +2,7 @@
   <v-app-bar app color="white" elevation="0">
     <div class="d-flex align-center">
       <router-link to="/" class="text-decoration-none black--text">
-        <h3>tenbyten product</h3>
+        <h3 class="logo">tenbyten product</h3>
       </router-link>
     </div>
     <v-spacer></v-spacer>
@@ -44,6 +44,9 @@ export default {
 </script>
 
 <style>
+h3.logo {
+  font-family: 'Roboto';
+}
 .v-toolbar__content {
   border-bottom: 1px solid #e7e7e7 !important;
 }
