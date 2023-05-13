@@ -15,20 +15,30 @@
       </template>
     </v-img>
     <v-card-title class="pt-2 pb-3 px-0 card-title">
-      {{ itemName }}
+      <span class="pr-1">
+        {{ itemName }}
+      </span>
+      <SalesChip :salesCode="salesCode" />
     </v-card-title>
   </v-card>
 </template>
 
 <script>
 import { getItem } from '@/api/items';
+import SalesChip from '@/components/SalesChip.vue';
 
 export default {
+  components: {
+    SalesChip,
+  },
   props: {
     itemId: {
       type: String,
     },
     itemName: {
+      type: String,
+    },
+    salesCode: {
       type: String,
     },
   },

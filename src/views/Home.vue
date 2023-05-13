@@ -22,8 +22,12 @@
           v-for="(item, i) in items"
           :key="i"
         >
-          <router-link :to="'/item/' + item.itemId">
-            <ItemCard :item-id="item.itemId" :item-name="item.name" />
+          <router-link :to="'/item/' + item.itemId + '/' + item.salesCode">
+            <ItemCard
+              :item-id="item.itemId"
+              :item-name="item.name"
+              :salesCode="item.salesCode"
+            />
           </router-link>
         </v-col>
       </v-row>

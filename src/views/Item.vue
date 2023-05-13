@@ -18,7 +18,10 @@
                 ></v-progress-circular>
               </v-row> </template
           ></v-img>
-          <div class="title-text mt-3">{{ item.name }}</div>
+          <div class="title-text mt-3">
+            {{ item.name }}
+            <SalesChip :salesCode="salesCode" />
+          </div>
         </div>
         <p class="mt-4 mb-0 text-subtitle-2">상품 상세 설명</p>
         <v-textarea
@@ -68,15 +71,18 @@
 <script>
 import ResultDialog from '@/components/ResultDialog.vue';
 import { getItem, editItem } from '@/api/items';
+import SalesChip from '@/components/SalesChip.vue';
 
 export default {
   components: {
     ResultDialog,
+    SalesChip,
   },
   async mounted() {
     let { data } = await getItem(this.$route.params.id);
     this.item = data.outPutValue;
     this.content = data.outPutValue.content;
+    this.salesCode = this.$route.params.code;
   },
   data() {
     return {
@@ -86,6 +92,7 @@ export default {
       dialog: false,
       result: '',
       errorMsg: '',
+      salesCode: '',
     };
   },
   methods: {
