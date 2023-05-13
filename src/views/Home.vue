@@ -71,6 +71,11 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  h2 {
+    font-size: 1.375rem;
+  }
+}
 a {
   text-decoration: none;
   color: #222222 !important;
