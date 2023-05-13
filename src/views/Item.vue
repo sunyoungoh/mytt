@@ -19,10 +19,10 @@
               </v-row> </template
           ></v-img>
           <div class="title-text mt-3">
-            <span class="mr-1">
+            <span>
               {{ item.name }}
             </span>
-            <SalesChip :salesCode="salesCode" />
+            <SalesChip :salesCode="salesCode" class="d-inline" />
           </div>
         </div>
         <p class="mt-4 mb-0 text-subtitle-2">상품 상세 설명</p>
@@ -126,7 +126,6 @@ export default {
   cursor: pointer;
 }
 .title-text {
-  display: inline-flex;
   font-size: 1.125rem;
   line-height: 1.3;
   letter-spacing: 0;
