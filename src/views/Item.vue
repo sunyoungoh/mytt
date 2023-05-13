@@ -48,7 +48,7 @@
           수정하기
         </v-btn>
         <v-btn
-          class="mt-2 mb-8"
+          class="mt-2"
           color="primary"
           height="48"
           dark
