@@ -57,6 +57,7 @@ export default {
         let { data } = await getItems(count);
         this.items.push(...data);
       }
+      this.itemsCount = this.items.length;
     } else {
       this.$router.push({ path: '/login' });
     }
@@ -65,11 +66,6 @@ export default {
     return {
       items: '',
     };
-  },
-  computed: {
-    itemsCount() {
-      return this.items.length;
-    },
   },
 };
 </script>
