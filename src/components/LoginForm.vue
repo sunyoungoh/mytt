@@ -80,7 +80,12 @@ export default {
             this.errorMsg = '로그인을 실패하였습니다.';
           }
         } catch (error) {
-          this.errorMsg = '로그인을 실패하였습니다.';
+          console.log(error);
+          if (error.response.data.status == 401) {
+            this.errorMsg = '권한없음(키 생성후 1시간안에 반영됩니다)';
+          } else {
+            this.errorMsg = '로그인을 실패하였습니다.';
+          }
         } finally {
           this.loading = false;
         }
