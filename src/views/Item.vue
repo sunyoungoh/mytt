@@ -33,12 +33,14 @@
         </div>
         <v-textarea
           v-model="content"
+          flat
+          solo
           hide-details
           text-narrow
-          class="mt-2 mb-4 text-body-2"
+          class="mt-2 mb-3 text-body-2"
           auto-grow
           filled
-          background-color="grey lighten-4"
+          background-color="grey lighten-3"
         ></v-textarea>
         <v-btn
           color="primary"
