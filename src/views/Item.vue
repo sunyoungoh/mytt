@@ -44,7 +44,6 @@
           color="primary"
           elevation="0"
           height="48"
-          dark
           block
           large
           :loading="loading"
@@ -56,7 +55,6 @@
           class="mt-2"
           color="primary"
           height="48"
-          dark
           block
           large
           outlined

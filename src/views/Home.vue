@@ -5,7 +5,7 @@
         <template v-if="$store.state.brandName !== ''">
           <v-col cols="12">
             <h2 class="text-center">
-              {{ $store.state.brandName }}님, 전시상품은 총
+              {{ $store.state.brandName }}님, 등록된 상품은 총
               <span class="red--text text--light-1"> {{ itemsCount }}</span
               >개입니다.
             </h2>
