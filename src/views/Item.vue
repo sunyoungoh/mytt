@@ -155,4 +155,8 @@ export default {
   fieldset {
   color: #d9d9d9;
 }
+.v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
+  textarea {
+  margin-bottom: 10px;
+}
 </style>
