@@ -1,6 +1,6 @@
 <template>
   <div class="label">
-    <p class="mt-6 mb-1 label-title">
+    <p class="mt-6 mb-0 label-title">
       <slot name="title"></slot>
     </p>
     <p class="grey--text label-desc mb-2">
