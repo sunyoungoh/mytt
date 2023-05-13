@@ -6,7 +6,7 @@
           <v-col cols="12">
             <h2 class="text-center">
               {{ $store.state.brandName }}님, 전시상품은 총
-              <span class="red--text text--light-1">{{ itemsCount }}</span
+              <span class="red--text text--light-1"> {{ itemsCount }} </span
               >개입니다.
             </h2>
           </v-col>

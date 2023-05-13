@@ -15,9 +15,7 @@
       </template>
     </v-img>
     <v-card-title class="pt-2 pb-3 px-0 card-title">
-      <span class="pr-1">
-        {{ itemName }}
-      </span>
+      {{ itemName }}
       <SalesChip :salesCode="salesCode" />
     </v-card-title>
   </v-card>

@@ -21,7 +21,7 @@
       <v-card-text v-if="errorMsg" class="text-center">
         {{ errorMsg }}
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions class="pb-3">
         <v-spacer></v-spacer>
         <v-btn color="grey darken-3" text @click="$emit('close')"> 닫기 </v-btn>
         <v-spacer></v-spacer>
