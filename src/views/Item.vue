@@ -147,4 +147,12 @@ export default {
   font-size: 0.75rem;
   letter-spacing: -0.01rem;
 }
+.theme--light.v-text-field--outlined:not(.v-input--is-focused):not(
+    .v-input--has-state
+  )
+  > .v-input__control
+  > .v-input__slot
+  fieldset {
+  color: #d9d9d9;
+}
 </style>
