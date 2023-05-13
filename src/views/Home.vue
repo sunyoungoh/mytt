@@ -12,37 +12,19 @@
           </v-col>
         </template>
       </v-row>
-      <v-row justify="center" class="px-2">
-        <v-col
-          cols="6"
-          sm="4"
-          md="3"
-          lg="3"
-          class="pa-2"
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <router-link :to="'/item/' + item.itemId + '/' + item.salesCode">
-            <ItemCard
-              :item-id="item.itemId"
-              :item-name="item.name"
-              :salesCode="item.salesCode"
-            />
-          </router-link>
-        </v-col>
-      </v-row>
+      <ItemList :items="items" />
     </v-container>
   </div>
 </template>
 
 <script>
-import ItemCard from '@/components/ItemCard.vue';
+import ItemList from '@/components/ItemList.vue';
 import { getItems } from '@/api/items';
 
 export default {
   name: 'Home',
   components: {
-    ItemCard,
+    ItemList,
   },
   async mounted() {
     if (this.$store.getters.isLogin) {
@@ -76,9 +58,5 @@ export default {
   h2 {
     font-size: 1.3rem;
   }
-}
-a {
-  text-decoration: none;
-  color: #222222 !important;
 }
 </style>

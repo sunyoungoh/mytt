@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100%" elevation="0">
+  <v-card height="100%" elevation="0" tile>
     <v-img
       :src="item.images?.basicImage"
       aspect-ratio="1"

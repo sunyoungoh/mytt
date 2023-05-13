@@ -3,6 +3,20 @@
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
 
+/* AppBar */
+h3.logo {
+  font-family: 'Roboto';
+  font-size: 1.125rem;
+}
+
+.v-toolbar__content {
+  border-bottom: 1px solid #e7e7e7 !important;
+}
+
+header .btns a {
+  font-size: 13px !important;
+}
+
 .v-btn {
   letter-spacing: 0.01rem !important;
 }
