@@ -112,9 +112,6 @@ export default {
 </script>
 
 <style scope>
-.title-img {
-  cursor: pointer;
-}
 .title-text {
   font-size: 1.25rem;
   line-height: 1.3;
