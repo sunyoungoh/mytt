@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container>
-      <v-row justify="center" class="mt-4 mt-md-6">
+      <v-row justify="center" class="mt-5 mt-md-8 mb-3 mb-md-4">
         <template v-if="$store.state.brandName !== ''">
           <v-col cols="12">
             <h2 class="text-center">
