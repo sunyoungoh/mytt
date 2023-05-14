@@ -8,7 +8,7 @@
             v-if="result == 'success'"
             class="font-weight-bold success--text"
           >
-            성공!
+            완료!
           </span>
           <span
             v-else-if="'fail'"
