@@ -169,9 +169,12 @@ export default {
         }
 
         this.result =
-          (statusResult == 200 && editResult == 200) ||
-          (statusResult == 200 && editResult == '') ||
-          (statusResult == '' && editResult == 200)
+          this.salesStatus == this.$route.params.salesCode ||
+          this.content == this.originContent
+            ? 'success' // 수정사항이 없는 경우 결과값
+            : (statusResult == 200 && editResult == 200) ||
+              (statusResult == 200 && editResult == '') ||
+              (statusResult == '' && editResult == 200)
             ? 'success'
             : 'fail';
       } catch ({ response }) {
