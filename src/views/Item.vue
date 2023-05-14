@@ -121,6 +121,7 @@ export default {
   data() {
     return {
       item: [],
+      originContent: '',
       content: '',
       loading: false,
       dialog: false,
@@ -147,17 +148,26 @@ export default {
       let { data } = await getItem(this.$route.params.id);
       this.item = data.outPutValue;
       this.content = data.outPutValue.content;
+      this.originContent = data.outPutValue.content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
     },
     async editItem() {
       this.loading = true;
       try {
-        let statusResult = await updateItemStatus(
-          this.item.itemid,
-          this.salesStatus,
-        );
-        let editResult = await editItem(this.item.itemid, this.content);
+        let statusResult = '';
+        let editResult = '';
+
+        if (this.salesStatus !== this.$route.params.salesCode) {
+          statusResult = await updateItemStatus(
+            this.item.itemid,
+            this.salesStatus,
+          );
+        }
+        if (this.content !== this.originContent) {
+          editResult = await editItem(this.item.itemid, this.content);
+        }
+
         this.result =
           statusResult.status == 200 && editResult.status == 200
             ? 'success'
