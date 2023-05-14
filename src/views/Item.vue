@@ -1,66 +1,76 @@
 <template>
-  <v-container>
-    <v-row class="mt-md-8">
-      <v-col cols="auto" class="pt-4 pb-0 item flex-md-grow-0 flex-md-shrink-1">
-        <BasicImage :src="item.images?.basicImage" />
-      </v-col>
-      <v-col class="pt-0 pl-md-1 flex-md-grow-1 flex-md-shrink-0">
-        <div class="title-text mt-3 mt-md-4">
-          <span>
-            {{ item.name }}
-          </span>
-          <SalesChip :salesCode="salesCode" class="d-inline" />
-        </div>
-        <InputLabel>
-          <template #title> 상품 상세 설명 </template>
-          <template #desc> HTML태그와 TEXT를 입력할 수 있습니다. </template>
-        </InputLabel>
-        <v-textarea
-          v-model="content"
-          flat
-          hide-details
-          text-narrow
-          class="mt-2 mb-3 text-body-2"
-          auto-grow
-          outlined
-        ></v-textarea>
-        <div class="btns mb-6">
-          <v-btn
-            color="primary"
-            elevation="0"
-            height="48"
-            block
-            large
-            :loading="loading"
-            @click="editItem"
-          >
-            수정하기
-          </v-btn>
-          <v-btn
-            class="mt-2"
-            color="primary"
-            height="48"
-            block
-            large
+  <div>
+    <ItemNav />
+    <v-container class="mb-8 item">
+      <v-row>
+        <v-col
+          cols="auto"
+          class="pt-4 pb-0 item-content flex-md-grow-0 flex-md-shrink-1"
+        >
+          <BasicImage :src="item.images?.basicImage" />
+        </v-col>
+        <v-col
+          md="5"
+          class="item-content pt-0 pl-md-1 flex-md-grow-1 flex-md-shrink-0"
+        >
+          <div class="title-text mt-3 mt-md-6">
+            <span>
+              {{ item.name }}
+            </span>
+            <SalesChip :salesCode="salesCode" class="d-inline" />
+          </div>
+          <InputLabel>
+            <template #title> 상품 상세 설명 </template>
+            <template #desc> HTML태그와 TEXT를 입력할 수 있습니다. </template>
+          </InputLabel>
+          <v-textarea
+            v-model="content"
+            flat
+            hide-details
+            text-narrow
+            class="mt-2 mb-3 text-body-2"
+            auto-grow
             outlined
-            @click="openUrl"
-          >
-            텐바이텐에 확인하러 가기
-          </v-btn>
-        </div>
-        <ResultDialog
-          :dialog="dialog"
-          :result="result"
-          :errorMsg="errorMsg"
-          @close="dialog = false"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
+          ></v-textarea>
+          <div class="btns mb-6">
+            <v-btn
+              color="primary"
+              elevation="0"
+              height="48"
+              block
+              large
+              :loading="loading"
+              @click="editItem"
+            >
+              수정하기
+            </v-btn>
+            <v-btn
+              class="mt-2"
+              color="primary"
+              height="48"
+              block
+              large
+              outlined
+              @click="openUrl"
+            >
+              텐바이텐에 확인하러 가기
+            </v-btn>
+          </div>
+          <ResultDialog
+            :dialog="dialog"
+            :result="result"
+            :errorMsg="errorMsg"
+            @close="dialog = false"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
 import { getItem, editItem } from '@/api/items';
+import ItemNav from '@/components/ItemNav.vue';
 import ResultDialog from '@/components/ResultDialog.vue';
 import BasicImage from '@/components/BasicImage.vue';
 import SalesChip from '@/components/SalesChip.vue';
@@ -68,6 +78,7 @@ import InputLabel from '@/components/InputLabel.vue';
 
 export default {
   components: {
+    ItemNav,
     ResultDialog,
     SalesChip,
     InputLabel,
@@ -114,6 +125,11 @@ export default {
 </script>
 
 <style scope>
+@media screen and (min-width: 960px) {
+  .item {
+    margin-left: 200px;
+  }
+}
 .title-text {
   font-size: 1.25rem;
   line-height: 1.3;

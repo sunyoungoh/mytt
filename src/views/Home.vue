@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-container>
+    <v-container class="mb-8">
       <PageTitle v-if="$store.state.brandName !== ''">
         {{ $store.state.brandName }}님, 등록된 상품은 총
         <span class="red--text text--light-1"> {{ itemsCount }}</span

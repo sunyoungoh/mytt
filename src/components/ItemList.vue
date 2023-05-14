@@ -1,11 +1,11 @@
 <template>
-  <v-row class="px-2">
+  <v-row class="px-3">
     <v-col
       cols="6"
       sm="4"
       md="3"
       lg="3"
-      class="pa-2"
+      class="pa-1"
       v-for="(item, i) in items"
       :key="i"
     >
