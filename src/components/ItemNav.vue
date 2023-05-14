@@ -7,19 +7,21 @@
     class="d-none d-md-flex"
   >
     <v-list dense nav>
-      <v-list-item
-        v-for="(item, i) in items"
-        :key="i"
-        link
-        :href="'/item/' + item.itemId + '/' + item.salesCode"
-        class="text-decoration-none"
-      >
-        <v-list-item-content>
-          <v-list-item-title class="font-weight-regular">{{
-            item.name
-          }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list-item-group v-model="selectedItem">
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          link
+          :href="'/item/' + item.itemId + '/' + item.salesCode"
+          class="text-decoration-none"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="font-weight-regular">
+              {{ item.name }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -48,7 +50,10 @@ export default {
       items: [],
     };
   },
+  computed: {
+    selectedItem() {
+      return this.items.map(item => item.itemId).indexOf(this.$route.params.id);
+    },
+  },
 };
 </script>
-
-<style></style>
