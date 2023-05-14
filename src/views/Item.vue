@@ -88,7 +88,7 @@
               :dialog="dialog"
               :result="result"
               :errorMsg="errorMsg"
-              @close="dialog = false"
+              @close="closeDialog"
             />
           </div>
         </v-col>
@@ -153,14 +153,28 @@ export default {
     async editItem() {
       this.loading = true;
       try {
-        await updateItemStatus(this.item.itemid, this.salesStatus);
-        let data = await editItem(this.item.itemid, this.content);
-        this.result = data.status == 200 ? 'success' : 'fail';
+        let statusResult = await updateItemStatus(
+          this.item.itemid,
+          this.salesStatus,
+        );
+        let editResult = await editItem(this.item.itemid, this.content);
+        this.result =
+          statusResult.status == 200 && editResult.status == 200
+            ? 'success'
+            : 'fail';
       } catch ({ response }) {
         this.errorMsg = response.data.message;
       } finally {
         this.loading = false;
         this.dialog = true;
+      }
+    },
+    closeDialog() {
+      this.dialog = false;
+      if (this.salesStatus !== this.$route.params.salesCode) {
+        this.$router.push({
+          path: `/item/${this.item.itemid}/${this.salesStatus}`,
+        });
       }
     },
     openUrl() {
