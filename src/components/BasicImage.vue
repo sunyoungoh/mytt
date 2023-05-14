@@ -3,7 +3,7 @@
     class="title-img grey lighten-2"
     :src="src"
     aspect-ratio="1"
-    width="550"
+    width="500"
   >
     <template v-slot:placeholder>
       <LoadingImage />

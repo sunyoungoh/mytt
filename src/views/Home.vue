@@ -1,29 +1,25 @@
 <template>
   <div class="home">
     <v-container>
-      <v-row justify="center" class="mt-5 mt-md-8 mb-3 mb-md-4">
-        <template v-if="$store.state.brandName !== ''">
-          <v-col cols="12">
-            <h2 class="text-center">
-              {{ $store.state.brandName }}님, 등록된 상품은 총
-              <span class="red--text text--light-1"> {{ itemsCount }}</span
-              >개입니다.
-            </h2>
-          </v-col>
-        </template>
-      </v-row>
+      <PageTitle v-if="$store.state.brandName !== ''">
+        {{ $store.state.brandName }}님, 등록된 상품은 총
+        <span class="red--text text--light-1"> {{ itemsCount }}</span
+        >개입니다.
+      </PageTitle>
       <ItemList :items="items" />
     </v-container>
   </div>
 </template>
 
 <script>
+import PageTitle from '@/components/PageTitle.vue';
 import ItemList from '@/components/ItemList.vue';
 import { getItems } from '@/api/items';
 
 export default {
   name: 'Home',
   components: {
+    PageTitle,
     ItemList,
   },
   async mounted() {
@@ -53,10 +49,4 @@ export default {
 };
 </script>
 
-<style scoped>
-@media screen and (max-width: 768px) {
-  h2 {
-    font-size: 1.3rem;
-  }
-}
-</style>
+<style></style>

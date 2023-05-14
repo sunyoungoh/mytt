@@ -1,19 +1,19 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="auto" class="py-4">
-        <div class="title">
-          <BasicImage :src="item.images?.basicImage" />
-          <div class="title-text mt-3">
-            <span>
-              {{ item.name }}
-            </span>
-            <SalesChip :salesCode="salesCode" class="d-inline" />
-          </div>
+    <v-row class="mt-md-8">
+      <v-col cols="auto" class="pt-4 pb-0 item flex-md-grow-0 flex-md-shrink-1">
+        <BasicImage :src="item.images?.basicImage" />
+      </v-col>
+      <v-col class="pt-0 pl-md-1 flex-md-grow-1 flex-md-shrink-0">
+        <div class="title-text mt-3 mt-md-4">
+          <span>
+            {{ item.name }}
+          </span>
+          <SalesChip :salesCode="salesCode" class="d-inline" />
         </div>
         <InputLabel>
-          <template #title> 상품 상세 설명</template>
-          <template #desc> HTML태그와 TEXT를 입력할 수 있습니다.</template>
+          <template #title> 상품 상세 설명 </template>
+          <template #desc> HTML태그와 TEXT를 입력할 수 있습니다. </template>
         </InputLabel>
         <v-textarea
           v-model="content"
@@ -81,7 +81,7 @@ export default {
   },
   data() {
     return {
-      item: '',
+      item: [],
       content: '',
       loading: false,
       dialog: false,

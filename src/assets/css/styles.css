@@ -29,6 +29,14 @@ header .btns a {
   letter-spacing: -0.01rem;
 }
 
+
+/* Common */
+@media screen and (max-width: 768px) {
+  h2.page-title {
+    font-size: 1.3rem;
+  }
+}
+
 .v-btn {
   letter-spacing: 0.01rem !important;
 }
