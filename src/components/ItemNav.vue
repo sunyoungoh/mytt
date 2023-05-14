@@ -12,7 +12,7 @@
           v-for="(item, i) in items"
           :key="i"
           link
-          :href="'/item/' + item.itemId + '/' + item.salesCode"
+          :to="'/item/' + item.itemId + '/' + item.salesCode"
           class="text-decoration-none"
         >
           <v-list-item-content>

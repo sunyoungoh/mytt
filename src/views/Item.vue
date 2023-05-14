@@ -84,11 +84,8 @@ export default {
     InputLabel,
     BasicImage,
   },
-  async mounted() {
-    let { data } = await getItem(this.$route.params.id);
-    this.item = data.outPutValue;
-    this.content = data.outPutValue.content;
-    this.salesCode = this.$route.params.salesCode;
+  mounted() {
+    this.fetchItem();
   },
   data() {
     return {
@@ -101,7 +98,18 @@ export default {
       salesCode: '',
     };
   },
+  watch: {
+    $route() {
+      this.fetchItem();
+    },
+  },
   methods: {
+    async fetchItem() {
+      let { data } = await getItem(this.$route.params.id);
+      this.item = data.outPutValue;
+      this.content = data.outPutValue.content;
+      this.salesCode = this.$route.params.salesCode;
+    },
     async editItem() {
       this.loading = true;
       try {
