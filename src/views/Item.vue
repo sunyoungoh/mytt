@@ -154,22 +154,24 @@ export default {
     },
     async editItem() {
       this.loading = true;
+      this.result = '';
       try {
         let statusResult = '';
         let editResult = '';
 
         if (this.salesStatus !== this.$route.params.salesCode) {
-          statusResult = await updateItemStatus(
-            this.item.itemid,
-            this.salesStatus,
-          );
+          let data = await updateItemStatus(this.item.itemid, this.salesStatus);
+          statusResult = data.status;
         }
         if (this.content !== this.originContent) {
-          editResult = await editItem(this.item.itemid, this.content);
+          let data = await editItem(this.item.itemid, this.content);
+          editResult = data.status;
         }
 
         this.result =
-          statusResult.status == 200 && editResult.status == 200
+          (statusResult == 200 && editResult == 200) ||
+          (statusResult == 200 && editResult == '') ||
+          (statusResult == '' && editResult == 200)
             ? 'success'
             : 'fail';
       } catch ({ response }) {
@@ -185,6 +187,9 @@ export default {
         this.$router.push({
           path: `/item/${this.item.itemid}/${this.salesStatus}`,
         });
+      }
+      if (this.content !== this.originContent) {
+        this.originContent = this.content;
       }
     },
     openUrl() {

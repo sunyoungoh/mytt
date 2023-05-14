@@ -41,7 +41,6 @@ export default {
   },
   watch: {
     $route() {
-      console.log('변경');
       this.fetchItems();
     },
   },
