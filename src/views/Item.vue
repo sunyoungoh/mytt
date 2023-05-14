@@ -2,18 +2,15 @@
   <div>
     <ItemNav />
     <v-container class="mb-8 item">
-      <v-row class="mt-md-4 mt-sm-1">
-        <v-col
-          cols="auto"
-          class="pt-4 pb-0 item-content flex-md-grow-0 flex-md-shrink-1"
-        >
-          <BasicImage :src="item.images?.basicImage" />
+      <v-row class="mt-md-4 pa-sm-3">
+        <v-col cols="auto" class="pa-0 flex-md-grow-0 flex-md-shrink-1">
+          <BasicImage :src="item.images?.basicImage" class="item-img" />
         </v-col>
         <v-col
           md="5"
-          class="item-content pt-0 pl-md-1 flex-md-grow-1 flex-md-shrink-0"
+          class="item-info pt-0 px-4 pr-md-0 flex-md-grow-1 flex-md-shrink-0"
         >
-          <div class="title-text mt-3 mt-md-6">
+          <div class="title-text mt-3">
             <span>
               {{ item.name }}
             </span>
@@ -133,10 +130,8 @@ export default {
 </script>
 
 <style scope>
-@media screen and (min-width: 960px) {
-  .item {
-    margin-left: 230px;
-  }
+.item-info {
+  max-width: 500px !important;
 }
 .title-text {
   font-size: 1.25rem;
@@ -159,5 +154,18 @@ export default {
 .v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
   textarea {
   margin-bottom: 10px;
+}
+@media screen and (min-width: 750px) {
+  textarea {
+    height: 250px !important;
+  }
+}
+@media screen and (min-width: 960px) {
+  .item {
+    margin-left: 230px;
+  }
+  .title-text {
+    font-size: 1.375rem;
+  }
 }
 </style>
