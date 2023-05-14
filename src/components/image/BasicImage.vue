@@ -1,5 +1,5 @@
 <template>
-  <v-img class="title-img grey lighten-2" :src="src" aspect-ratio="1">
+  <v-img class="basic-img grey lighten-2" :src="src" aspect-ratio="1">
     <template v-slot:placeholder>
       <LoadingImage />
     </template>
@@ -23,12 +23,26 @@ export default {
 </script>
 
 <style>
-.title-img {
-  width: 600px;
+.basic-img {
+  border-radius: 0.25rem;
 }
-@media screen and (min-width: 600px) {
-  .title-img {
-    width: 500px;
+.item .basic-img {
+  width: 150px;
+  height: 150px;
+}
+@media screen and (max-width: 376px) {
+  .item .basic-img {
+    width: 120px;
+    height: 120px;
   }
 }
+/* .basic-img {
+  width: 600px;
+  border-radius: 0.3rem;
+}
+@media screen and (min-width: 600px) {
+  .item .basic-img {
+    width: 150px;
+  }
+} */
 </style>
