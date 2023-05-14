@@ -2,7 +2,7 @@
   <div>
     <ItemNav />
     <v-container class="mb-8 item">
-      <v-row>
+      <v-row class="mt-md-4 mt-sm-1">
         <v-col
           cols="auto"
           class="pt-4 pb-0 item-content flex-md-grow-0 flex-md-shrink-1"
@@ -127,7 +127,7 @@ export default {
 <style scope>
 @media screen and (min-width: 960px) {
   .item {
-    margin-left: 200px;
+    margin-left: 230px;
   }
 }
 .title-text {
