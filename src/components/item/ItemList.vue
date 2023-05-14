@@ -5,7 +5,7 @@
       sm="4"
       md="3"
       lg="3"
-      class="pa-1 pa-md-2"
+      class="px-1 pt-0 pb-4 px-md-2"
       v-for="(item, i) in items"
       :key="i"
     >

@@ -1,45 +1,36 @@
 <template>
-  <div>
+  <div item>
     <ItemNav />
-    <v-container class="mb-8 item pa-4">
-      <v-row class="pt-md-8" justify="start">
-        <v-col class="d-flex">
+    <v-container class="item mb-8 px-4">
+      <PageTitle> 상품 수정 </PageTitle>
+      <v-row justify="start">
+        <v-col class="d-flex pt-0">
           <BasicImage
             :src="item.images?.basicImage"
             class="item-img flex-grow-0"
+            @click.native="openUrl"
           />
           <div class="item-info mt-1 ml-3 flex-grow-1">
             <SalesChip :salesCode="salesCode" />
-            <div class="title-text mt-1">
+            <div class="item-title mt-1">
               {{ item.name }}
             </div>
-            <div class="price pt-1 pt-sm-2 pt-md-3">
+            <div class="price pt-2 pt-md-3">
               <template v-if="item.orgprice !== item.sellPrice">
-                <div
-                  class="text-body-2 text-decoration-line-through grey--text grey-darken-3"
-                >
+                <div class="price-origin grey--text grey-darken-3">
                   {{ item.orgprice | comma }}원
                 </div>
-                <div>
-                  <span class="red--text font-weight-bold">
-                    {{ salePer }}%
-                  </span>
-                  <span class="font-weight-bold">
-                    {{ item.sellPrice | comma }}원
-                  </span>
-                </div>
+                <span class="red--text mr-1"> {{ salePer }}% </span>
               </template>
-              <template v-else>
-                <span class="font-weight-bold">
-                  {{ item.sellPrice | comma }}원
-                </span>
-              </template>
+              <span class="d-inline font-weight-bold">
+                {{ item.sellPrice | comma }}원
+              </span>
             </div>
           </div>
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="py-0">
+        <v-col class="pt-0">
           <div class="edit-wrap">
             <InputLabel>
               <template #title> 상품 상세 설명 </template>
@@ -52,7 +43,7 @@
               text-narrow
               class="mt-2 mb-3 text-body-2"
               auto-grow
-              rows="8"
+              rows="7"
               outlined
             ></v-textarea>
             <div class="btns mb-6">
@@ -94,6 +85,7 @@
 
 <script>
 import { getItem, editItem } from '@/api/items';
+import PageTitle from '@/components/common/PageTitle.vue';
 import ItemNav from '@/components/item/ItemNav.vue';
 import ResultDialog from '@/components/common/ResultDialog.vue';
 import BasicImage from '@/components/image/BasicImage.vue';
@@ -103,6 +95,7 @@ import InputLabel from '@/components/common/InputLabel.vue';
 export default {
   components: {
     ItemNav,
+    PageTitle,
     ResultDialog,
     SalesChip,
     InputLabel,
@@ -169,12 +162,6 @@ export default {
 </script>
 
 <style scope>
-.title-text {
-  font-size: 17px;
-  line-height: 1.3;
-  letter-spacing: 0;
-  font-weight: 600;
-}
 [text-narrow] {
   line-height: 1.5 !important;
 }
@@ -190,30 +177,5 @@ export default {
 .v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
   textarea {
   margin-bottom: 10px;
-}
-
-/* @media screen and (max-width: 425px) {
-  .price {
-    display: inline-flex;
-    flex-flow: row-reverse;
-    align-items: baseline;
-    gap: 0.25rem;
-  } */
-/* } */
-
-@media screen and (min-width: 600px) {
-  .title-text {
-    font-size: 1.25rem;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  .item {
-    margin-left: 230px;
-    width: calc(100% - 260px);
-  }
-  .title-text {
-    font-size: 1.375rem;
-  }
 }
 </style>

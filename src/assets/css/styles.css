@@ -30,17 +30,47 @@ header .btns a {
 }
 
 
-/* Common */
-@media screen and (max-width: 768px) {
-  h2.page-title {
-    font-size: 1.3rem;
-  }
+/* Item Page*/
+.item-img{
+  cursor: pointer;
 }
 
+.item-title {
+  font-size: 17px;
+  line-height: 1.3;
+  letter-spacing: -0.01rem;
+}
+
+.price{
+  font-weight: 500;
+}
+
+.price-origin{
+text-decoration: line-through;
+font-size: 0.875rem;
+line-height: 1rem;
+}
+
+/* Common */
 .v-btn {
   letter-spacing: 0.01rem !important;
 }
 
 footer > div {
   border-top: 1px solid #efefef;
+}
+
+
+/* Media Query */
+@media screen and (max-width: 768px) {
+  h2.page-title {
+    font-size: 1.375rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .item {
+    margin-left: 230px;
+    width: calc(100% - 260px);
+  }
 }
