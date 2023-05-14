@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import PageTitle from '@/components/PageTitle.vue';
-import ItemList from '@/components/ItemList.vue';
+import PageTitle from '@/components/common/PageTitle.vue';
+import ItemList from '@/components/item/ItemList.vue';
 import { getItems } from '@/api/items';
 
 export default {

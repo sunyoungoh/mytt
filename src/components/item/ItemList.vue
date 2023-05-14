@@ -5,7 +5,7 @@
       sm="4"
       md="3"
       lg="3"
-      class="pa-1"
+      class="pa-1 pa-md-2"
       v-for="(item, i) in items"
       :key="i"
     >
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import ItemCard from '@/components/ItemCard.vue';
+import ItemCard from '@/components/item/ItemCard.vue';
 
 export default {
   name: 'ItemList',

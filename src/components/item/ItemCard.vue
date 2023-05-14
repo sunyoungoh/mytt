@@ -10,8 +10,8 @@
 
 <script>
 import { getItem } from '@/api/items';
-import SalesChip from '@/components/SalesChip.vue';
-import BasicImage from '@/components/BasicImage.vue';
+import SalesChip from '@/components/common/SalesChip.vue';
+import BasicImage from '@/components/image/BasicImage.vue';
 
 export default {
   components: {

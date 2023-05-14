@@ -67,11 +67,11 @@
 
 <script>
 import { getItem, editItem } from '@/api/items';
-import ItemNav from '@/components/ItemNav.vue';
-import ResultDialog from '@/components/ResultDialog.vue';
-import BasicImage from '@/components/BasicImage.vue';
-import SalesChip from '@/components/SalesChip.vue';
-import InputLabel from '@/components/InputLabel.vue';
+import ItemNav from '@/components/item/ItemNav.vue';
+import ResultDialog from '@/components/common/ResultDialog.vue';
+import BasicImage from '@/components/image/BasicImage.vue';
+import SalesChip from '@/components/common/SalesChip.vue';
+import InputLabel from '@/components/common/InputLabel.vue';
 
 export default {
   components: {

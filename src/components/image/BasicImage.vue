@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import LoadingImage from '@/components/LoadingImage.vue';
+import LoadingImage from '@/components/image/LoadingImage.vue';
 
 export default {
   components: {
