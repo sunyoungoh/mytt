@@ -2,7 +2,7 @@
   <div>
     <ItemNav />
     <v-container class="mb-8 item">
-      <v-row class="mt-md-4 pa-sm-3" justify="center">
+      <v-row class="pt-md-10 pa-sm-3 justify-md-start" justify="center">
         <v-col cols="auto" class="pa-0 flex-md-grow-0 flex-md-shrink-1">
           <BasicImage :src="item.images?.basicImage" class="item-img" />
         </v-col>
