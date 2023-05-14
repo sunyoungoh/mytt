@@ -2,7 +2,7 @@
   <div>
     <ItemNav />
     <v-container class="mb-8 item">
-      <v-row class="mt-md-4 pa-sm-3">
+      <v-row class="mt-md-4 pa-sm-3" justify="center">
         <v-col cols="auto" class="pa-0 flex-md-grow-0 flex-md-shrink-1">
           <BasicImage :src="item.images?.basicImage" class="item-img" />
         </v-col>
@@ -130,9 +130,6 @@ export default {
 </script>
 
 <style scope>
-.item-info {
-  max-width: 500px !important;
-}
 .title-text {
   font-size: 1.25rem;
   line-height: 1.3;
@@ -154,6 +151,11 @@ export default {
 .v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
   textarea {
   margin-bottom: 10px;
+}
+@media screen and (min-width: 600px) {
+  .item-info {
+    max-width: 500px !important;
+  }
 }
 @media screen and (min-width: 750px) {
   textarea {
