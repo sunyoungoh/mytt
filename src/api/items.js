@@ -25,5 +25,12 @@ const editItem = (itemId, editHTML) => {
     content: editHTML,
   });
 };
+const updateItemStatus = (itemId, sellYN) => {
+  return instanceAuth.put('/tenbyten/item/status', {
+    itemId: itemId,
+    brandId: store.state.brandId,
+    sellYN: sellYN,
+  });
+};
 
-export { getBrandInfo, getItems, getItem, editItem };
+export { getBrandInfo, getItems, getItem, editItem, updateItemStatus };

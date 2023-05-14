@@ -10,7 +10,7 @@
             class="item-img flex-grow-0"
             @click.native="openUrl"
           />
-          <div class="item-info mt-1 ml-3 flex-grow-1">
+          <div class="item-info mt-md-1 ml-3 flex-grow-1">
             <SalesChip :salesCode="salesCode" />
             <div class="item-title mt-1">
               {{ item.name }}
@@ -20,7 +20,7 @@
                 <div class="price-origin grey--text grey-darken-3">
                   {{ item.orgprice | comma }}원
                 </div>
-                <span class="red--text mr-1"> {{ salePer }}% </span>
+                <span class="red--text"> {{ salePer }}% </span>
               </template>
               <span class="d-inline font-weight-bold">
                 {{ item.sellPrice | comma }}원
@@ -32,6 +32,20 @@
       <v-row>
         <v-col class="pt-0">
           <div class="edit-wrap">
+            <InputLabel>
+              <template #title> 판매 상태 </template>
+            </InputLabel>
+            <v-radio-group
+              v-model="salesStatus"
+              row
+              class="mt-0 pb-3"
+              :ripple="false"
+              hide-details
+            >
+              <v-radio label="판매중" value="Y"></v-radio>
+              <v-radio label="판매중지" value="N"></v-radio>
+              <v-radio label="일시품절" value="S"></v-radio>
+            </v-radio-group>
             <InputLabel>
               <template #title> 상품 상세 설명 </template>
               <template #desc> HTML태그와 TEXT를 입력할 수 있습니다. </template>
@@ -84,7 +98,7 @@
 </template>
 
 <script>
-import { getItem, editItem } from '@/api/items';
+import { getItem, editItem, updateItemStatus } from '@/api/items';
 import PageTitle from '@/components/common/PageTitle.vue';
 import ItemNav from '@/components/item/ItemNav.vue';
 import ResultDialog from '@/components/common/ResultDialog.vue';
@@ -113,6 +127,7 @@ export default {
       result: '',
       errorMsg: '',
       salesCode: '',
+      salesStatus: '',
     };
   },
   computed: {
@@ -133,10 +148,12 @@ export default {
       this.item = data.outPutValue;
       this.content = data.outPutValue.content;
       this.salesCode = this.$route.params.salesCode;
+      this.salesStatus = this.$route.params.salesCode;
     },
     async editItem() {
       this.loading = true;
       try {
+        await updateItemStatus(this.item.itemid, this.salesStatus);
         let data = await editItem(this.item.itemid, this.content);
         this.result = data.status == 200 ? 'success' : 'fail';
       } catch ({ response }) {
@@ -165,7 +182,15 @@ export default {
 [text-narrow] {
   line-height: 1.5 !important;
 }
-
+.v-label {
+  font-size: 14px !important;
+}
+.v-application--is-ltr .v-input--selection-controls__input {
+  margin-right: 4px;
+}
+.v-input--selection-controls__ripple {
+  display: none !important;
+}
 .theme--light.v-text-field--outlined:not(.v-input--is-focused):not(
     .v-input--has-state
   )
