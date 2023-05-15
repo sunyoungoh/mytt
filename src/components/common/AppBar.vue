@@ -1,7 +1,11 @@
 <template>
   <v-app-bar app color="white" elevation="0">
     <div class="d-flex align-center">
-      <router-link to="/" class="text-decoration-none black--text">
+      <router-link
+        to="/"
+        @click.native="reload"
+        class="text-decoration-none black--text"
+      >
         <h3 class="logo">tenbyten product</h3>
       </router-link>
     </div>
@@ -40,6 +44,11 @@ export default {
     logout() {
       this.$store.dispatch('logout');
       this.$router.push({ path: '/login' });
+    },
+    reload() {
+      if (this.$route.path == '/') {
+        this.$router.go(0);
+      }
     },
   },
 };

@@ -2,11 +2,26 @@
   <div class="home">
     <v-container class="mb-8">
       <PageTitle v-if="$store.state.brandName !== ''">
-        {{ $store.state.brandName }}님, 등록된 상품은 총
-        <span class="red--text text--light-1"> {{ itemsCount }}</span
-        >개입니다.
+        <template v-if="!isSearch">
+          {{ $store.state.brandName }}님, 등록된 상품은 총
+          <span class="red--text text--light-1"> {{ itemsCount }}</span
+          >개입니다.
+        </template>
+        <template v-else>
+          '{{ searchTerm }}'로 검색된 상품은 총
+          <span class="red--text text--light-1"> {{ itemsCount }}</span
+          >개입니다.
+        </template>
       </PageTitle>
-      <ItemList :items="items" />
+      <div class="px-md-2 px-1 pt-0 pt-md-2 pb-4 col-12 col-md-7 mx-auto">
+        <v-text-field
+          prepend-inner-icon="mdi-magnify"
+          class="search-bar pt-0"
+          @keyup.enter="searchItem"
+          v-model="searchTerm"
+        ></v-text-field>
+      </div>
+      <ItemList :items="searchItems" />
     </v-container>
   </div>
 </template>
@@ -14,7 +29,6 @@
 <script>
 import PageTitle from '@/components/common/PageTitle.vue';
 import ItemList from '@/components/item/ItemList.vue';
-import { getItems } from '@/api/items';
 
 export default {
   name: 'Home',
@@ -24,29 +38,36 @@ export default {
   },
   async mounted() {
     if (this.$store.getters.isLogin) {
-      // 한 페이지당 100개씩 가져오기 때문에 페이지수로 호출
-      let count = 1;
-      let { data } = await getItems(count);
-      this.items = data;
-
-      //100개가 넘으면 다음페이지 호출
-      while (this.items.length % 100 == 0) {
-        count++;
-        let { data } = await getItems(count);
-        this.items.push(...data);
-      }
-      this.itemsCount = this.items.length;
+      this.originItems = await this.$store.dispatch('fetchItems');
+      this.searchItems = this.originItems;
+      this.itemsCount = this.originItems.length;
     } else {
       this.$router.push({ path: '/login' });
     }
   },
   data() {
     return {
-      items: [],
+      originItems: [],
       itemsCount: '',
+      searchTerm: '',
+      searchItems: [],
+      isSearch: false,
     };
+  },
+  methods: {
+    searchItem() {
+      if (this.searchTerm) {
+        this.searchItems = this.originItems.filter(item =>
+          item.name.includes(this.searchTerm),
+        );
+        this.isSearch = true;
+        this.itemsCount = this.searchItems.length;
+      } else {
+        this.isSearch = false;
+        this.searchItems = this.originItems;
+        this.itemsCount = this.originItems.length;
+      }
+    },
   },
 };
 </script>
-
-<style></style>

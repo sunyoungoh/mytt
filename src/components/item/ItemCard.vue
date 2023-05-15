@@ -30,13 +30,23 @@ export default {
     },
   },
   async mounted() {
-    let { data } = await getItem(this.itemId);
-    this.item = data.outPutValue;
+    this.fetchItem();
   },
   data() {
     return {
       item: '',
     };
+  },
+  watch: {
+    async itemId() {
+      this.fetchItem();
+    },
+  },
+  methods: {
+    async fetchItem() {
+      let { data } = await getItem(this.itemId);
+      this.item = data.outPutValue;
+    },
   },
 };
 </script>

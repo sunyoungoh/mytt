@@ -27,8 +27,6 @@
 </template>
 
 <script>
-import { getItems } from '@/api/items';
-
 export default {
   async mounted() {
     this.fetchItems();
@@ -48,16 +46,8 @@ export default {
   methods: {
     async fetchItems() {
       if (this.$store.getters.isLogin) {
-        let count = 1;
-        let { data } = await getItems(count);
-        this.items = data;
-
-        //100개가 넘으면 다음페이지 호출
-        while (this.items.length % 100 == 0) {
-          count++;
-          let { data } = await getItems(count);
-          this.items.push(...data);
-        }
+        this.items = await this.$store.dispatch('fetchItems');
+        // list active 속성 반영
         this.selectedItem = this.items
           .map(item => item.itemId)
           .indexOf(this.$route.params.id);
