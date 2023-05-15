@@ -8,12 +8,14 @@
           >개입니다.
         </template>
         <template v-else>
-          '{{ searchTerm }}'로 검색된 상품은 총
+          {{ searchMsg }} 총
           <span class="red--text text--light-1"> {{ itemsCount }}</span
           >개입니다.
         </template>
       </PageTitle>
-      <div class="px-md-2 px-1 pt-0 pt-md-2 pb-4 col-12 col-md-7 mx-auto">
+      <div
+        class="search-input-wrap px-md-2 px-1 pt-0 pt-md-2 pb-4 col-12 col-md-7 mx-auto"
+      >
         <v-text-field
           prepend-inner-icon="mdi-magnify"
           class="search-bar pt-0"
@@ -52,6 +54,7 @@ export default {
       searchTerm: '',
       searchItems: [],
       isSearch: false,
+      searchMsg: '',
     };
   },
   methods: {
@@ -62,6 +65,7 @@ export default {
         );
         this.isSearch = true;
         this.itemsCount = this.searchItems.length;
+        this.searchMsg = ` ${this.searchTerm}로 검색된 상품은`;
       } else {
         this.isSearch = false;
         this.searchItems = this.originItems;
