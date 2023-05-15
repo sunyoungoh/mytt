@@ -114,7 +114,6 @@
               text-narrow
               class="mt-2 mb-3 text-body-2"
               auto-grow
-              rows="7"
               outlined
             ></v-textarea>
             <div class="btns mb-6">
@@ -346,7 +345,7 @@ export default {
   margin-bottom: 10px;
 }
 .selectbox-size .v-select__slot {
-  width: 120px !important;
+  width: 110px !important;
 }
 .v-input--radio-group.v-input--radio-group--row .v-radio {
   margin-right: 10px;
