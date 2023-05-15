@@ -347,6 +347,8 @@ export default {
 .label.production-day {
   position: relative;
   top: -2px;
+  word-break: keep-all;
+  word-wrap: normal;
 }
 .v-application--is-ltr .v-input--selection-controls__input {
   margin-right: 4px;
