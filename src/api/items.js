@@ -19,11 +19,8 @@ const getItem = id => {
   return instanceAuth.get(`/tenbyten/items/${id}`);
 };
 
-const editItem = (itemId, editHTML) => {
-  return instanceAuth.put('/tenbyten/item', {
-    itemId: itemId,
-    content: editHTML,
-  });
+const updateItemInfo = updateData => {
+  return instanceAuth.put('/tenbyten/item', updateData);
 };
 const updateItemStatus = (itemId, sellYN) => {
   return instanceAuth.put('/tenbyten/item/status', {
@@ -33,4 +30,4 @@ const updateItemStatus = (itemId, sellYN) => {
   });
 };
 
-export { getBrandInfo, getItems, getItem, editItem, updateItemStatus };
+export { getBrandInfo, getItems, getItem, updateItemInfo, updateItemStatus };

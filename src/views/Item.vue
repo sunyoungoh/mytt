@@ -32,20 +32,77 @@
       <v-row>
         <v-col class="pt-0">
           <div class="edit-wrap">
-            <InputLabel>
-              <template #title> 판매 상태 </template>
-            </InputLabel>
-            <v-radio-group
-              v-model="salesStatus"
-              row
-              class="mt-0 pb-3"
-              :ripple="false"
-              hide-details
-            >
-              <v-radio label="판매중" value="Y"></v-radio>
-              <v-radio label="판매중지" value="N"></v-radio>
-              <v-radio label="일시품절" value="S"></v-radio>
-            </v-radio-group>
+            <div class="item-status">
+              <InputLabel>
+                <template #title> 판매 상태 </template>
+              </InputLabel>
+              <v-radio-group
+                v-model="salesStatus"
+                row
+                class="mt-0 pb-3"
+                :ripple="false"
+                hide-details
+              >
+                <v-radio label="판매중" value="Y"></v-radio>
+                <v-radio label="판매중지" value="N"></v-radio>
+                <v-radio label="일시품절" value="S"></v-radio>
+              </v-radio-group>
+            </div>
+            <div class="item-division">
+              <InputLabel>
+                <template #title> 판매 구분 </template>
+              </InputLabel>
+              <v-radio-group
+                v-model="division"
+                row
+                class="mt-0 pb-3"
+                :ripple="false"
+                hide-details
+              >
+                <v-radio label="일반상품" value="N"></v-radio>
+                <v-radio label="주문제작상품" value="C"></v-radio>
+                <v-radio label="문구필요 주문제작상품" value="M"></v-radio>
+              </v-radio-group>
+              <div class="d-flex" v-if="division == 'M'">
+                <div class="mt-3 mr-2 text-body-2 label production-day">
+                  예상제작소요일
+                </div>
+                <v-text-field
+                  outlined
+                  class="text-body-2 pb-3"
+                  v-model="productionDay"
+                  dense
+                  hide-details
+                  suffix="일"
+                ></v-text-field>
+              </div>
+            </div>
+            <div class="item-size">
+              <InputLabel>
+                <template #title> 상품사이즈 </template>
+                <template #desc> </template>
+              </InputLabel>
+              <div class="pb-3 d-flex">
+                <v-text-field
+                  outlined
+                  class="text-body-2 col-8"
+                  v-model="size"
+                  dense
+                  hide-details
+                ></v-text-field>
+                <v-select
+                  v-model="selectedSizeUint"
+                  :items="sizeUnit"
+                  item-text="text"
+                  item-value="value"
+                  return-object
+                  hide-details
+                  outlined
+                  dense
+                  class="text-body-2 ml-2 selectbox-size"
+                ></v-select>
+              </div>
+            </div>
             <InputLabel>
               <template #title> 상품 상세 설명 </template>
               <template #desc> HTML태그와 TEXT를 입력할 수 있습니다. </template>
@@ -98,7 +155,7 @@
 </template>
 
 <script>
-import { getItem, editItem, updateItemStatus } from '@/api/items';
+import { getItem, updateItemInfo, updateItemStatus } from '@/api/items';
 import PageTitle from '@/components/common/PageTitle.vue';
 import ItemNav from '@/components/item/ItemNav.vue';
 import ResultDialog from '@/components/common/ResultDialog.vue';
@@ -129,6 +186,25 @@ export default {
       errorMsg: '',
       salesCode: '',
       salesStatus: '',
+      division: '',
+      productionDay: '',
+      size: '',
+      selectedSizeUint: { text: 'mm', value: 'mm' },
+      sizeUnit: [
+        { text: '직접입력', value: '' },
+        { text: 'mm', value: 'mm' },
+        { text: 'cm', value: 'cm' },
+        { text: 'm', value: 'm' },
+        { text: 'km', value: 'km' },
+        { text: 'm²', value: 'm²' },
+        { text: 'km²', value: 'km²' },
+        { text: 'ha', value: 'ha' },
+        { text: 'm³', value: 'm³' },
+        { text: 'cm³', value: 'cm³' },
+        { text: 'L', value: 'L' },
+        { text: 'g', value: 'g' },
+        { text: 'Kg', value: 'Kg' },
+      ],
     };
   },
   computed: {
@@ -151,6 +227,9 @@ export default {
       this.originContent = data.outPutValue.content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
+      this.division = data.outPutValue.division;
+      this.productionDay = data.outPutValue.productionDay;
+      this.size = data.outPutValue.size;
     },
     async editItem() {
       this.loading = true;
@@ -163,18 +242,30 @@ export default {
           let data = await updateItemStatus(this.item.itemid, this.salesStatus);
           statusResult = data.status;
         }
-        if (this.content !== this.originContent) {
-          let data = await editItem(this.item.itemid, this.content);
-          editResult = data.status;
+
+        // 단위까지 함께 전송되어 숫자만 추출하여 전송
+        let index = this.size.indexOf('(');
+        let onlySize = this.size;
+        if (index > 0) {
+          onlySize = this.size.slice(0, index);
         }
 
+        // 수정 api 호출
+        let { status } = await updateItemInfo({
+          itemId: this.item.itemid,
+          content: this.content,
+          division: this.division,
+          productionDay: this.productionDay,
+          size: onlySize,
+          sizeUnit: this.selectedSizeUint.value,
+        });
+        editResult = status;
+
+        // 결과 dialog에 반영할 값 저장F
         this.result =
-          this.salesStatus == this.$route.params.salesCode ||
-          this.content == this.originContent
-            ? 'success' // 수정사항이 없는 경우 결과값
-            : (statusResult == 200 && editResult == 200) ||
-              (statusResult == 200 && editResult == '') ||
-              (statusResult == '' && editResult == 200)
+          (statusResult == 200 && editResult == 200) ||
+          (statusResult == 200 && editResult == '') ||
+          (statusResult == '' && editResult == 200)
             ? 'success'
             : 'fail';
       } catch ({ response }) {
@@ -191,9 +282,7 @@ export default {
           path: `/item/${this.item.itemid}/${this.salesStatus}`,
         });
       }
-      if (this.content !== this.originContent) {
-        this.originContent = this.content;
-      }
+      this.fetchItem();
     },
     openUrl() {
       let url = `
@@ -214,8 +303,14 @@ export default {
 [text-narrow] {
   line-height: 1.5 !important;
 }
-.v-label {
+.v-label,
+.label {
   font-size: 14px !important;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif' !important;
+}
+.label.production-day {
+  position: relative;
+  top: -2px;
 }
 .v-application--is-ltr .v-input--selection-controls__input {
   margin-right: 4px;
@@ -234,5 +329,18 @@ export default {
 .v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
   textarea {
   margin-bottom: 10px;
+}
+.selectbox-size .v-select__slot {
+  width: 120px !important;
+}
+.v-input--radio-group.v-input--radio-group--row .v-radio {
+  margin-right: 10px;
+}
+
+.v-radio .v-icon {
+  font-size: 20px;
+}
+.v-radio .v-input--selection-controls__input {
+  margin-right: 0px;
 }
 </style>
