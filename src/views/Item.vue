@@ -229,7 +229,26 @@ export default {
       this.salesStatus = this.$route.params.salesCode;
       this.division = data.outPutValue.division;
       this.productionDay = data.outPutValue.productionDay;
-      this.size = data.outPutValue.size;
+
+      // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
+      let originSize = data.outPutValue.size;
+
+      // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장
+      if (originSize) {
+        let index = originSize.indexOf('(');
+        if (index > 0) {
+          // 사이즈 숫자 저장
+          this.size = originSize.slice(0, index);
+          // () 괄호 제거 후 사이즈 단위 저장
+          let originSizeUnit = originSize.slice(index + 1, -1);
+          this.selectedSizeUint = this.sizeUnit.filter(
+            item => item.value == originSizeUnit,
+          )[0];
+        }
+      } else {
+        this.size = '';
+        this.selectedSizeUint = { text: 'mm', value: 'mm' };
+      }
     },
     async editItem() {
       this.loading = true;
@@ -243,20 +262,13 @@ export default {
           statusResult = data.status;
         }
 
-        // 단위까지 함께 전송되어 숫자만 추출하여 전송
-        let index = this.size.indexOf('(');
-        let onlySize = this.size;
-        if (index > 0) {
-          onlySize = this.size.slice(0, index);
-        }
-
         // 수정 api 호출
         let { status } = await updateItemInfo({
           itemId: this.item.itemid,
           content: this.content,
           division: this.division,
           productionDay: this.productionDay,
-          size: onlySize,
+          size: this.size,
           sizeUnit: this.selectedSizeUint.value,
         });
         editResult = status;
