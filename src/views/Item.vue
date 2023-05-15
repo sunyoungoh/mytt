@@ -77,6 +77,38 @@
                 ></v-text-field>
               </div>
             </div>
+            <div class="item-content">
+              <InputLabel>
+                <template #title> 상품 상세 설명 </template>
+                <template #desc>
+                  HTML태그와 TEXT를 입력할 수 있습니다.
+                </template>
+              </InputLabel>
+              <v-textarea
+                v-model="content"
+                flat
+                hide-details
+                text-narrow
+                class="mt-2 pb-3 text-body-2"
+                auto-grow
+                outlined
+              ></v-textarea>
+            </div>
+            <div class="item-material">
+              <InputLabel>
+                <template #title> 상품 재질 </template>
+                <template #desc> </template>
+              </InputLabel>
+              <div class="pb-3 d-flex">
+                <v-text-field
+                  outlined
+                  class="text-body-2 col-8"
+                  v-model="material"
+                  dense
+                  hide-details
+                ></v-text-field>
+              </div>
+            </div>
             <div class="item-size">
               <InputLabel>
                 <template #title> 상품사이즈 </template>
@@ -103,20 +135,7 @@
                 ></v-select>
               </div>
             </div>
-            <InputLabel>
-              <template #title> 상품 상세 설명 </template>
-              <template #desc> HTML태그와 TEXT를 입력할 수 있습니다. </template>
-            </InputLabel>
-            <v-textarea
-              v-model="content"
-              flat
-              hide-details
-              text-narrow
-              class="mt-2 mb-3 text-body-2"
-              auto-grow
-              outlined
-            ></v-textarea>
-            <div class="btns mb-6">
+            <div class="btns mb-6 pt-3">
               <v-btn
                 color="primary"
                 elevation="0"
@@ -188,6 +207,7 @@ export default {
       division: '',
       productionDay: '',
       size: '',
+      material: '',
       selectedSizeUint: { text: 'mm', value: 'mm' },
       sizeUnit: [
         { text: '직접입력', value: '' },
@@ -228,6 +248,7 @@ export default {
       this.salesStatus = this.$route.params.salesCode;
       this.division = data.outPutValue.division;
       this.productionDay = data.outPutValue.productionDay;
+      this.material = data.outPutValue.material;
 
       // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
       let originSize = data.outPutValue.size;
@@ -272,6 +293,7 @@ export default {
           productionDay: this.productionDay,
           size: this.size,
           sizeUnit: this.selectedSizeUint.value,
+          material: this.material,
         });
         editResult = status;
 
