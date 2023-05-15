@@ -232,19 +232,22 @@ export default {
 
       // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
       let originSize = data.outPutValue.size;
-
+      console.log(originSize);
       // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장
-      if (originSize) {
+      if (originSize && originSize.indexOf('(') > 0) {
         let index = originSize.indexOf('(');
         if (index > 0) {
           // 사이즈 숫자 저장
           this.size = originSize.slice(0, index);
-          // () 괄호 제거 후 사이즈 단위 저장
+          // () 괄호 제거 후 사이즈 단위만 저장
           let originSizeUnit = originSize.slice(index + 1, -1);
           this.selectedSizeUint = this.sizeUnit.filter(
             item => item.value == originSizeUnit,
           )[0];
         }
+      } else if (originSize) {
+        this.size = originSize;
+        this.selectedSizeUint = { text: '직접입력', value: '' };
       } else {
         this.size = '';
         this.selectedSizeUint = { text: 'mm', value: 'mm' };
