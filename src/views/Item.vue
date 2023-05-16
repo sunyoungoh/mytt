@@ -127,7 +127,7 @@
               </div>
             </div>
             <div
-              class="item-btns px-2 py-2 d-flex justify-center justify-md-end"
+              class="item-btns px-2 py-2 col-12 justify-center justify-md-end"
             >
               <v-btn
                 class="mx-1 flex col-md-2"
