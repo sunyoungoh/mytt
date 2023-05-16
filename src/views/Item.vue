@@ -135,6 +135,7 @@
                 height="46"
                 large
                 outlined
+                min-width="180"
                 @click="openUrl"
               >
                 텐바이텐에 확인하러 가기
