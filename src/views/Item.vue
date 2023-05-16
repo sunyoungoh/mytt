@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-container class="item-container mb-8 px-4">
+  <div class="item">
+    <v-container class="item-container mb-8 px-4" v-show="show">
       <PageTitle> 상품 수정 </PageTitle>
       <v-row justify="start">
         <v-col class="d-flex pt-0">
@@ -188,15 +188,18 @@ export default {
     HtmlEditor,
   },
   mounted() {
-    this.fetchItem();
-  },
-  unmounted() {
-    // 이 부분을 생략한다면 router-link를 통해 화면을 전환하여도 메모리에서는 여전히 동작하기 때문에
-    // 다른 method들과 충돌이 발생할 수도 있다.
-    document.removeEventListener('scroll', this.scrollEvents);
+    this.$nextTick(() => {
+      console.log('mounted');
+      this.fetchItem();
+    });
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      this.show = true;
+    }, 150);
   },
   data() {
     return {
+      show: false,
       item: [],
       originContent: '',
       content: '',
@@ -239,7 +242,9 @@ export default {
   },
   watch: {
     $route() {
-      this.fetchItem();
+      this.$nextTick(() => {
+        this.fetchItem();
+      });
     },
   },
   methods: {
@@ -258,20 +263,20 @@ export default {
       let originSize = data.outPutValue.size;
       console.log(originSize);
 
-      // 단위 시작 끝 인덱스
-      let unitStartIndex = originSize.indexOf('(');
-      let unitEndIndex = originSize.indexOf(')');
-
-      // 사이즈 단위가 있는지 찾는 함수
-      const findUnit = () => {
-        let result = this.sizeUnit
-          .map(item => originSize.indexOf(`(${item.value})`))
-          .filter(item => item >= 0);
-        return result.length > 0 ? true : false;
-      };
-
       // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장
       if (originSize) {
+        // 단위 시작 끝 인덱스
+        let unitStartIndex = originSize.indexOf('(');
+        let unitEndIndex = originSize.indexOf(')');
+
+        // 사이즈 단위가 있는지 찾는 함수
+        const findUnit = () => {
+          let result = this.sizeUnit
+            .map(item => originSize.indexOf(`(${item.value})`))
+            .filter(item => item >= 0);
+          return result.length > 0 ? true : false;
+        };
+
         // 사이즈 단위 있나 체크
         let existUnit = findUnit();
 
@@ -291,7 +296,7 @@ export default {
           this.selectedSizeUint = { text: '직접입력', value: '' };
         }
       }
-      await this.scrollTop();
+      window.scrollTo(0, 0);
     },
     async editItem() {
       this.loading = true;
@@ -369,11 +374,6 @@ export default {
         });
       }
       this.fetchItem();
-    },
-    scrollTop() {
-      // 스크롤 최상단으로 이동
-      window.scrollTo(0, 0);
-      document.addEventListener('scroll', this.scrollEvents);
     },
     openUrl() {
       let url = `
