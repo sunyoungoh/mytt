@@ -85,6 +85,47 @@
               </InputLabel>
               <HtmlEditor v-model="content" />
             </div>
+            <div class="item-material">
+              <InputLabel>
+                <template #title> 상품 재질 </template>
+                <template #desc> </template>
+              </InputLabel>
+              <div class="pb-3 d-flex">
+                <v-text-field
+                  outlined
+                  class="text-body-2 col-8"
+                  v-model="material"
+                  dense
+                  hide-details
+                ></v-text-field>
+              </div>
+            </div>
+            <div class="item-size">
+              <InputLabel>
+                <template #title> 상품사이즈 </template>
+                <template #desc> </template>
+              </InputLabel>
+              <div class="pb-3 d-flex">
+                <v-text-field
+                  outlined
+                  class="text-body-2 col-8"
+                  v-model="size"
+                  dense
+                  hide-details
+                ></v-text-field>
+                <v-select
+                  v-model="selectedSizeUint"
+                  :items="sizeUnit"
+                  item-text="text"
+                  item-value="value"
+                  return-object
+                  hide-details
+                  outlined
+                  dense
+                  class="text-body-2 ml-2 selectbox-size"
+                ></v-select>
+              </div>
+            </div>
             <div class="item-btns px-2 py-2 d-flex justify-end">
               <v-btn
                 class="mx-1"
@@ -163,6 +204,24 @@ export default {
       salesStatus: '',
       division: '',
       productionDay: '',
+      size: '',
+      material: '',
+      selectedSizeUint: { text: '직접입력', value: '' },
+      sizeUnit: [
+        { text: '직접입력', value: '' },
+        { text: 'mm', value: 'mm' },
+        { text: 'cm', value: 'cm' },
+        { text: 'm', value: 'm' },
+        { text: 'km', value: 'km' },
+        { text: 'm²', value: 'm²' },
+        { text: 'km²', value: 'km²' },
+        { text: 'ha', value: 'ha' },
+        { text: 'm³', value: 'm³' },
+        { text: 'cm³', value: 'cm³' },
+        { text: 'L', value: 'L' },
+        { text: 'g', value: 'g' },
+        { text: 'Kg', value: 'Kg' },
+      ],
     };
   },
   computed: {
@@ -188,6 +247,43 @@ export default {
       this.division = data.outPutValue.division;
       this.productionDay = data.outPutValue.productionDay;
       this.material = data.outPutValue.material;
+
+      // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
+      let originSize = data.outPutValue.size;
+      console.log(originSize);
+
+      // 단위 시작 끝 인덱스
+      let unitStartIndex = originSize.indexOf('(');
+      let unitEndIndex = originSize.indexOf(')');
+
+      // 사이즈 단위가 있는지 찾는 함수
+      const findUnit = () => {
+        let result = this.sizeUnit
+          .map(item => originSize.indexOf(`(${item.value})`))
+          .filter(item => item >= 0);
+        return result.length > 0 ? true : false;
+      };
+
+      // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장
+      if (originSize) {
+        // 사이즈 단위 있나 체크
+        let existUnit = findUnit();
+
+        if (existUnit) {
+          // 단위가 끝에 (cm) 형태로 있으면 잘라서 저장
+          if (unitStartIndex > 0 && unitEndIndex + 1 == originSize.length) {
+            // 사이즈 숫자 저장
+            this.size = originSize.slice(0, unitStartIndex);
+            // () 괄호 제거 후 사이즈 단위만 저장
+            let originSizeUnit = originSize.slice(unitStartIndex + 1, -1);
+            this.selectedSizeUint = this.sizeUnit.filter(
+              item => item.value == originSizeUnit,
+            )[0];
+          }
+        } else {
+          this.size = originSize;
+        }
+      }
     },
     async editItem() {
       this.loading = true;
@@ -207,7 +303,9 @@ export default {
           content: this.content,
           division: this.division,
           productionDay: this.productionDay,
-          size: this.item.size,
+          size: this.size,
+          sizeUnit: this.selectedSizeUint.value,
+          material: this.material,
         });
         editResult = status;
 
