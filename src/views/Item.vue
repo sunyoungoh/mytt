@@ -130,7 +130,7 @@
               class="item-btns px-2 py-2 col-12 justify-center justify-md-end"
             >
               <v-btn
-                class="mx-1 flex col-md-2"
+                class="mx-1 flex col-md-2 col-sm-6"
                 color="primary"
                 height="46"
                 large
@@ -141,7 +141,7 @@
                 텐바이텐에 확인하러 가기
               </v-btn>
               <v-btn
-                class="mx-1 flex col-md-2"
+                class="mx-1 flex col-md-2 col-sm-6"
                 color="primary"
                 elevation="0"
                 height="46"
