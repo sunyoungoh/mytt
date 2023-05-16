@@ -4,7 +4,7 @@
     permanent
     hide-overlay
     width="200"
-    class="d-none d-md-flex"
+    class="d-none d-md-flex py-16"
   >
     <v-list dense nav>
       <v-list-item-group v-model="selectedItem">

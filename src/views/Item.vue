@@ -1,7 +1,6 @@
 <template>
-  <div item>
-    <ItemNav />
-    <v-container class="item mb-8 px-4">
+  <div>
+    <v-container class="item-container mb-8 px-4">
       <PageTitle> 상품 수정 </PageTitle>
       <v-row justify="start">
         <v-col class="d-flex pt-0">
@@ -29,7 +28,7 @@
           </div>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="mb-6">
         <v-col class="pt-0">
           <div class="edit-wrap">
             <div class="item-status">
@@ -81,18 +80,10 @@
               <InputLabel>
                 <template #title> 상품 상세 설명 </template>
                 <template #desc>
-                  HTML태그와 TEXT를 입력할 수 있습니다.
+                  텍스트 편집기에 내용 입력 및 이미지를 넣어보세요.
                 </template>
               </InputLabel>
-              <v-textarea
-                v-model="content"
-                flat
-                hide-details
-                text-narrow
-                class="mt-2 pb-3 text-body-2"
-                auto-grow
-                outlined
-              ></v-textarea>
+              <HtmlEditor v-model="content" />
             </div>
             <div class="item-material">
               <InputLabel>
@@ -135,28 +126,29 @@
                 ></v-select>
               </div>
             </div>
-            <div class="btns mb-6 pt-3">
+            <div class="item-btns px-2 py-2 d-flex justify-end">
               <v-btn
+                class="mx-1"
                 color="primary"
-                elevation="0"
-                height="48"
-                block
-                large
-                :loading="loading"
-                @click="editItem"
-              >
-                수정하기
-              </v-btn>
-              <v-btn
-                class="mt-2"
-                color="primary"
-                height="48"
-                block
+                height="46"
+                width="180"
                 large
                 outlined
                 @click="openUrl"
               >
                 텐바이텐에 확인하러 가기
+              </v-btn>
+              <v-btn
+                class="mx-1 flex"
+                color="primary"
+                elevation="0"
+                height="46"
+                max-width="180"
+                large
+                :loading="loading"
+                @click="editItem"
+              >
+                수정하기
               </v-btn>
             </div>
             <ResultDialog
@@ -174,30 +166,40 @@
 
 <script>
 import { getItem, updateItemInfo, updateItemStatus } from '@/api/items';
+
 import PageTitle from '@/components/common/PageTitle.vue';
-import ItemNav from '@/components/item/ItemNav.vue';
 import ResultDialog from '@/components/common/ResultDialog.vue';
 import BasicImage from '@/components/image/BasicImage.vue';
 import SalesChip from '@/components/common/SalesChip.vue';
 import InputLabel from '@/components/common/InputLabel.vue';
+import HtmlEditor from '@/components/HtmlEditor.vue';
+
+import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '@/utils/supabase.js';
 
 export default {
   components: {
-    ItemNav,
     PageTitle,
     ResultDialog,
     SalesChip,
     InputLabel,
     BasicImage,
+    HtmlEditor,
   },
   mounted() {
-    this.fetchItem();
+    this.$nextTick(() => {
+      this.fetchItem();
+      var footer = document.getElementsByClassName('v-footer')[0];
+      footer.style.cssText += 'margin-bottom: 70px; margin-left: 200px;';
+    });
   },
   data() {
     return {
       item: [],
       originContent: '',
       content: '',
+      image: undefined,
+      imageUrl: '',
       loading: false,
       dialog: false,
       result: '',
@@ -310,6 +312,36 @@ export default {
         this.loading = false;
         this.dialog = true;
       }
+    },
+    async createImageUrl(file) {
+      console.log(file);
+      try {
+        const blob = file;
+
+        if (!blob) {
+          return;
+        }
+        const key = uuidv4();
+        const bucket = 'images'; // supabase 에 미리 만들어둔 public 버킷 이름
+
+        await supabase.storage.from(bucket).upload(key, blob, {
+          cacheControl: '3600',
+        });
+
+        const { publicUrl } = await supabase.storage
+          .from(bucket)
+          .getPublicUrl(key).data;
+        console.log(publicUrl);
+        this.imageUrl = publicUrl;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    onFileChange(file) {
+      if (!file) {
+        return;
+      }
+      this.createImageUrl(file);
     },
     closeDialog() {
       this.dialog = false;

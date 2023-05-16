@@ -26,23 +26,14 @@ export default {
 .basic-img {
   border-radius: 0.25rem;
 }
-.item .basic-img {
+.item-container .basic-img {
   width: 150px;
   height: 150px;
 }
 @media screen and (max-width: 376px) {
-  .item .basic-img {
+  .item-container .basic-img {
     width: 120px;
     height: 120px;
   }
 }
-/* .basic-img {
-  width: 600px;
-  border-radius: 0.3rem;
-}
-@media screen and (min-width: 600px) {
-  .item .basic-img {
-    width: 150px;
-  }
-} */
 </style>

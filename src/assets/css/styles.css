@@ -29,9 +29,12 @@ header .btns a {
   letter-spacing: -0.01rem;
 }
 
-
 /* Item Page*/
-.item-img{
+.item-container {
+  margin-bottom: 80px !important;
+}
+
+.item-img {
   cursor: pointer;
 }
 
@@ -41,13 +44,26 @@ header .btns a {
   letter-spacing: -0.01rem;
 }
 
-.price{
+.price {
   font-weight: 500;
 }
 
-.price-origin{
-text-decoration: line-through;
-font-size: 0.875rem;
+.price-origin {
+  text-decoration: line-through;
+  font-size: 0.875rem;
+}
+.item-btns {
+  display: inline-flex;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  align-items: center;
+  height: 70px;
+  z-index: 99;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /* Common */
@@ -59,7 +75,6 @@ footer > div {
   border-top: 1px solid #efefef;
 }
 
-
 /* Media Query */
 @media screen and (max-width: 768px) {
   h2.page-title {
@@ -68,7 +83,7 @@ footer > div {
 }
 
 @media screen and (min-width: 960px) {
-  .item {
+  .item-container {
     margin-left: 230px;
     width: calc(100% - 260px);
   }

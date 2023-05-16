@@ -1,17 +1,13 @@
 <template>
   <div class="home">
     <v-container class="mb-8">
-      <PageTitle v-if="$store.state.brandName !== ''">
+      <PageTitle v-if="$store.state.brandName !== ''" class="text-center">
         <template v-if="!isSearch">
           {{ $store.state.brandName }}님, 등록된 상품은 총
-          <span class="red--text text--light-1"> {{ itemsCount }}</span
-          >개입니다.
         </template>
-        <template v-else>
-          {{ searchMsg }} 총
-          <span class="red--text text--light-1"> {{ itemsCount }}</span
-          >개입니다.
-        </template>
+        <template v-else> {{ searchMsg }} 총 </template>
+        <span class="red--text text--light-1"> {{ itemsCount }}</span
+        >개입니다.
       </PageTitle>
       <div
         class="search-input-wrap px-md-2 px-1 pt-0 pt-md-2 pb-4 col-12 col-md-7 mx-auto"
@@ -21,6 +17,7 @@
           class="search-bar pt-0"
           @keyup.enter="searchItem"
           v-model="searchTerm"
+          placeholder="검색할 상품명을 입력하세요!"
         ></v-text-field>
       </div>
       <ItemList :items="searchItems" />

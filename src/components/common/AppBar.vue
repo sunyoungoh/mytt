@@ -15,7 +15,7 @@
         v-if="$store.getters.isLogin"
         text
         plain
-        class="pr-0"
+        class="px-0"
         color="black"
         :ripple="false"
         to="/login"
@@ -27,7 +27,7 @@
         v-else
         text
         plain
-        class="pr-0"
+        class="px-0"
         color="black"
         :ripple="false"
         to="/login"
