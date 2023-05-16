@@ -62,7 +62,7 @@ export default {
         );
         this.isSearch = true;
         this.itemsCount = this.searchItems.length;
-        this.searchMsg = ` ${this.searchTerm}로 검색된 상품은`;
+        this.searchMsg = `'${this.searchTerm}'로 검색된 상품은`;
       } else {
         this.isSearch = false;
         this.searchItems = this.originItems;
