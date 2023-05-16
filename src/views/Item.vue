@@ -126,12 +126,13 @@
                 ></v-select>
               </div>
             </div>
-            <div class="item-btns px-2 py-2 d-flex justify-end">
+            <div
+              class="item-btns px-2 py-2 d-flex justify-center justify-md-end"
+            >
               <v-btn
-                class="mx-1"
+                class="mx-1 flex col-md-2"
                 color="primary"
                 height="46"
-                width="180"
                 large
                 outlined
                 @click="openUrl"
@@ -139,11 +140,10 @@
                 텐바이텐에 확인하러 가기
               </v-btn>
               <v-btn
-                class="mx-1 flex"
+                class="mx-1 flex col-md-2"
                 color="primary"
                 elevation="0"
                 height="46"
-                max-width="180"
                 large
                 :loading="loading"
                 @click="editItem"
