@@ -187,11 +187,7 @@ export default {
     HtmlEditor,
   },
   mounted() {
-    this.$nextTick(() => {
-      this.fetchItem();
-      var footer = document.getElementsByClassName('v-footer')[0];
-      footer.style.cssText += 'margin-bottom: 70px; margin-left: 200px;';
-    });
+    this.fetchItem();
   },
   data() {
     return {
@@ -412,5 +408,15 @@ export default {
 }
 .v-radio .v-input--selection-controls__input {
   margin-right: 0px;
+}
+
+.v-footer {
+  margin-bottom: 70px;
+}
+
+@media screen and (min-width: 960px) {
+  .v-footer {
+    margin-left: 200px;
+  }
 }
 </style>
