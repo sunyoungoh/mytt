@@ -190,6 +190,11 @@ export default {
   mounted() {
     this.fetchItem();
   },
+  unmounted() {
+    // 이 부분을 생략한다면 router-link를 통해 화면을 전환하여도 메모리에서는 여전히 동작하기 때문에
+    // 다른 method들과 충돌이 발생할 수도 있다.
+    document.removeEventListener('scroll', this.scrollEvents);
+  },
   data() {
     return {
       item: [],
@@ -286,6 +291,7 @@ export default {
           this.selectedSizeUint = { text: '직접입력', value: '' };
         }
       }
+      await this.scrollTop();
     },
     async editItem() {
       this.loading = true;
@@ -363,6 +369,11 @@ export default {
         });
       }
       this.fetchItem();
+    },
+    scrollTop() {
+      // 스크롤 최상단으로 이동
+      window.scrollTo(0, 0);
+      document.addEventListener('scroll', this.scrollEvents);
     },
     openUrl() {
       let url = `
