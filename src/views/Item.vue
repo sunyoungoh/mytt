@@ -189,13 +189,12 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      console.log('mounted');
       this.fetchItem();
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        this.show = true;
+      }, 200);
     });
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-      this.show = true;
-    }, 150);
   },
   data() {
     return {
