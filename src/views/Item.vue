@@ -282,6 +282,7 @@ export default {
           }
         } else {
           this.size = originSize;
+          this.selectedSizeUint = { text: '직접입력', value: '' };
         }
       }
     },
