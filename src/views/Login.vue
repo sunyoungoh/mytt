@@ -9,12 +9,11 @@ export default {
   components: {
     LoginForm,
   },
-  mounted() {
-    if (this.$store.getters.isLogin) {
-      this.$router.push({ path: '/' });
-    }
-  },
 };
 </script>
 
-<style></style>
+<style scoped>
+.v-footer {
+  margin-bottom: 0;
+}
+</style>

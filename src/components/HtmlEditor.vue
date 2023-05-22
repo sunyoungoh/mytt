@@ -89,7 +89,6 @@ export default {
     onEditorReady(editor) {
       // 이미지 메소드 추가
       editor.getModule('toolbar').addHandler('image', this.imageHandler);
-      console.log('editor ready!', editor);
     },
     imageHandler() {
       console.log('imageHandler start=============');

@@ -36,13 +36,9 @@ export default {
     ItemList,
   },
   async mounted() {
-    if (this.$store.getters.isLogin) {
-      this.originItems = await this.$store.dispatch('fetchItems');
-      this.searchItems = this.originItems;
-      this.itemsCount = this.originItems.length;
-    } else {
-      this.$router.push({ path: '/login' });
-    }
+    this.originItems = await this.$store.dispatch('fetchItems');
+    this.searchItems = this.originItems;
+    this.itemsCount = this.originItems.length;
   },
   data() {
     return {
@@ -72,3 +68,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.v-footer {
+  margin-bottom: 0;
+}
+</style>
