@@ -19,8 +19,24 @@ const getItem = id => {
   return instanceAuth.get(`/tenbyten/items/${id}`);
 };
 
+const getWaitItems = () => {
+  return instanceAuth.get('/tenbyten/waitItems', {
+    params: {
+      brandId: store.state.brandId,
+    },
+  });
+};
+
 const updateItemInfo = updateData => {
   return instanceAuth.put('/tenbyten/item', updateData);
+};
+
+const getWaitItem = id => {
+  return instanceAuth.get(`/tenbyten/waitItem/${id}`);
+};
+
+const updateWaitItemInfo = updateData => {
+  return instanceAuth.put('/tenbyten/waitItem', updateData);
 };
 
 const updateItemStatus = (itemId, sellYN) => {
@@ -43,7 +59,10 @@ export {
   getBrandInfo,
   getItems,
   getItem,
+  getWaitItems,
+  getWaitItem,
   updateItemInfo,
   updateItemImages,
+  updateWaitItemInfo,
   updateItemStatus,
 };

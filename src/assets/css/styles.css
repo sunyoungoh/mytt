@@ -66,14 +66,14 @@ header .btns a {
 
 .contemt-images-wrap .btn-delete {
   position: relative;
-  top: -96px;
-  left: 72px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
+  top: -105px;
+  left: 73px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
   z-index: 99;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
   border-radius: 50%;
   background-color: #212121;
   color: #fff;
