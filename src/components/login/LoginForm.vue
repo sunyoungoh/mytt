@@ -49,6 +49,7 @@
 
 <script>
 import { getBrandInfo } from '@/api/items';
+import { supabase } from '@/utils/supabase.js';
 
 export default {
   data() {
@@ -68,16 +69,25 @@ export default {
       if (this.valid == true) {
         this.loading = true;
         try {
-          let res = await getBrandInfo(this.apiKey);
-          if (res.status == 200 && res.data.brandid == this.brandId) {
-            this.$store.dispatch('login', {
-              apiKey: this.apiKey,
-              brandId: res.data.brandid,
-              brandName: res.data.BrandNameKor,
-            });
-            this.$router.push({ path: '/' });
+          // supabase에 등록된 사용자인지 확인
+          let { data } = await supabase
+            .from('tenbyten')
+            .select()
+            .eq('brand_id', this.brandId);
+
+          // 등록된 사용자가 맞다면
+          if (data.length > 0) {
+            let res = await getBrandInfo(this.apiKey);
+            if (res.status == 200 && res.data.brandid == this.brandId) {
+              this.$store.dispatch('login', {
+                apiKey: this.apiKey,
+                brandId: res.data.brandid,
+                brandName: res.data.BrandNameKor,
+              });
+              this.$router.push({ path: '/' });
+            }
           } else {
-            this.errorMsg = '로그인을 실패하였습니다.';
+            this.errorMsg = '등록된 회원이 아닙니다.';
           }
         } catch (error) {
           console.log(error);
