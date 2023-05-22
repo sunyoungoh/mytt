@@ -279,10 +279,10 @@ export default {
       this.material = data.outPutValue.material;
 
       // 상품 상세 이미지 저장
-      let imgArr = data.outPutValue.images.mainImages.map(item => {
+      let imgArr = [];
+      data.outPutValue.images.mainImages.map(item => {
         if (item.imageUrl.search('.jpg') > 0) {
-          // imgArr.push(item.imageUrl);
-          return item.imageUrl;
+          imgArr.push(item.imageUrl);
         }
       });
       // this.originContentImages = [...imgArr];
