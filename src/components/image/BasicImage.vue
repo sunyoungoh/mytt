@@ -1,5 +1,5 @@
 <template>
-  <v-img class="basic-img grey lighten-2" :src="src" aspect-ratio="1">
+  <v-img class="grey lighten-2" :src="src" aspect-ratio="1">
     <template v-slot:placeholder>
       <LoadingImage />
     </template>
@@ -23,13 +23,23 @@ export default {
 </script>
 
 <style>
-.basic-img {
+.v-image {
   border-radius: 0.25rem;
 }
+
 .item-container .basic-img {
   width: 150px;
   height: 150px;
 }
+
+.item-container .content-img {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #eee;
+}
+
 @media screen and (max-width: 376px) {
   .item-container .basic-img {
     width: 120px;

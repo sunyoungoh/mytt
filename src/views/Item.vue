@@ -6,7 +6,7 @@
         <v-col class="d-flex pt-0">
           <BasicImage
             :src="item.images?.basicImage"
-            class="item-img flex-grow-0"
+            class="item-img flex-grow-0 basic-img"
             @click.native="openUrl"
           />
           <div class="item-info mt-md-1 ml-3 flex-grow-1">
@@ -76,7 +76,26 @@
                 ></v-text-field>
               </div>
             </div>
-            <div class="item-content">
+            <div class="item-content-images" v-if="contentImages?.length > 0">
+              <InputLabel>
+                <template #title> 상품 설명 이미지 </template>
+                <template #desc>
+                  텐바이텐에서 등록했던 상품 설명 이미지 파일입니다.
+                </template>
+              </InputLabel>
+              <div class="contemt-images-wrap pb-2">
+                <div v-for="(item, i) in contentImages" :key="i">
+                  <a :href="item" target="_blank" class="mb-2">
+                    <BasicImage
+                      :src="item || ''"
+                      class="flex-grow-0 content-img mr-2"
+                    />
+                  </a>
+                  <!-- <button class="btn-delete" @click="deleteImg(i)">X</button> -->
+                </div>
+              </div>
+            </div>
+            <div class="item-content pb-3">
               <InputLabel>
                 <template #title> 상품 상세 설명 </template>
                 <template #desc>
@@ -201,9 +220,10 @@ export default {
       show: false,
       item: [],
       originContent: '',
+      // colorCode: '',
       content: '',
-      image: undefined,
-      imageUrl: '',
+      // originContentImages: [],
+      contentImages: [],
       loading: false,
       dialog: false,
       result: '',
@@ -258,6 +278,16 @@ export default {
       this.productionDay = data.outPutValue.productionDay;
       this.material = data.outPutValue.material;
 
+      // 상품 상세 이미지 저장
+      let imgArr = data.outPutValue.images.mainImages.map(item => {
+        if (item.imageUrl.search('.jpg') > 0) {
+          // imgArr.push(item.imageUrl);
+          return item.imageUrl;
+        }
+      });
+      // this.originContentImages = [...imgArr];
+      this.contentImages = [...imgArr];
+
       // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
       let originSize = data.outPutValue.size;
       console.log(originSize);
@@ -302,12 +332,30 @@ export default {
       this.result = '';
       try {
         let statusResult = '';
-        let editResult = '';
+        let infoEditResult = '';
+        // let imageEditResult = '';
 
+        // 상품 판매상태 수정
         if (this.salesStatus !== this.$route.params.salesCode) {
           let data = await updateItemStatus(this.item.itemid, this.salesStatus);
           statusResult = data.status;
         }
+
+        // 상품 상세 이미지 수정 (api 요청 결과는 성공했다고 돌아오나 아이템 정보를 불러왔을 때는 저장이 안되어있음)
+        // console.log(this.item.images.basicImage);
+        // if (this.originContentImages !== this.contentImages) {
+        //   // 상품코드값이 0으로 에러면 11(흰색)으로 등록
+        //   let colorCode = this.colorCode == 0 ? 11 : this.colorCode;
+        //   let data = await updateItemImages(this.item.itemid, colorCode, {
+        //     imgBasic: this.item.images.basicImage,
+        //     imgMain: this.contentImages[0],
+        //     imgMain2: this.contentImages[1],
+        //     imgMain3: this.contentImages[2],
+        //     imgMain4: this.contentImages[3],
+        //     imgMain5: this.contentImages[4],
+        //   });
+        //   imageEditResult = data.status;
+        // }
 
         // 수정 api 호출
         let { status } = await updateItemInfo({
@@ -319,15 +367,11 @@ export default {
           sizeUnit: this.selectedSizeUint.value,
           material: this.material,
         });
-        editResult = status;
+        infoEditResult = status;
 
-        // 결과 dialog에 반영할 값 저장F
+        // 결과 dialog에 반영할 값 저장
         this.result =
-          (statusResult == 200 && editResult == 200) ||
-          (statusResult == 200 && editResult == '') ||
-          (statusResult == '' && editResult == 200)
-            ? 'success'
-            : 'fail';
+          statusResult == 400 || infoEditResult == 400 ? 'fail' : 'success';
       } catch ({ response }) {
         this.errorMsg = response.data.message;
       } finally {
@@ -354,7 +398,6 @@ export default {
           .from(bucket)
           .getPublicUrl(key).data;
         console.log(publicUrl);
-        this.imageUrl = publicUrl;
       } catch (err) {
         console.log(err);
       }
@@ -380,6 +423,9 @@ export default {
       `;
       window.open(url, '_blank', 'noreferrer');
     },
+    //   deleteImg(index) {
+    //     this.contentImages.splice(index, 1);
+    //   },
   },
   filters: {
     comma(val) {

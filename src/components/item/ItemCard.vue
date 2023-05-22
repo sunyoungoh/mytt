@@ -1,6 +1,6 @@
 <template>
   <v-card height="100%" elevation="0">
-    <BasicImage :src="item.images?.basicImage" />
+    <BasicImage :src="item.images?.basicImage" class="basic-img" />
     <v-card-title class="pt-2 pb-5 px-0 card-title d-block">
       {{ itemName }}
       <SalesChip :salesCode="salesCode" class="mt-1" />

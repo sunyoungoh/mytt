@@ -22,6 +22,7 @@ const getItem = id => {
 const updateItemInfo = updateData => {
   return instanceAuth.put('/tenbyten/item', updateData);
 };
+
 const updateItemStatus = (itemId, sellYN) => {
   return instanceAuth.put('/tenbyten/item/status', {
     itemId: itemId,
@@ -30,4 +31,19 @@ const updateItemStatus = (itemId, sellYN) => {
   });
 };
 
-export { getBrandInfo, getItems, getItem, updateItemInfo, updateItemStatus };
+const updateItemImages = (itemId, colorCode, images) => {
+  return instanceAuth.put('/tenbyten/item/images', {
+    itemId: itemId,
+    colorCode: colorCode, // 컬러코드 에러로 실행못함
+    images: images,
+  });
+};
+
+export {
+  getBrandInfo,
+  getItems,
+  getItem,
+  updateItemInfo,
+  updateItemImages,
+  updateItemStatus,
+};

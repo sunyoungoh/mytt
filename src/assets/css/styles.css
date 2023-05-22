@@ -52,6 +52,33 @@ header .btns a {
   text-decoration: line-through;
   font-size: 0.875rem;
 }
+
+.contemt-images-wrap {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  width: 100%
+}
+
+.contemt-images-wrap a {
+  height: 100px;
+}
+
+.contemt-images-wrap .btn-delete {
+  position: relative;
+  top: -96px;
+  left: 72px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  z-index: 99;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 50%;
+  background-color: #212121;
+  color: #fff;
+}
+
 .item-btns {
   display: inline-flex;
   border-top: 1px solid #eee;
