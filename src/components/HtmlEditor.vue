@@ -47,12 +47,12 @@ export default {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'], // <strong>, <em>, <u>, <s>
             ['blockquote', 'code-block'], // <blockquote>, <pre class="ql-syntax" spellcheck="false">
-            [{ header: 1 }, { header: 2 }], // <h1>, <h2>
+            // [{ header: 1 }, { header: 2 }], // <h1>, <h2>
             [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ script: 'sub' }, { script: 'super' }], // <sub>, <sup>
+            // [{ script: 'sub' }, { script: 'super' }], // <sub>, <sup>
             [{ indent: '-1' }, { indent: '+1' }], // class제어
-            [{ direction: 'rtl' }], //class 제어
-            [{ size: ['small', false, 'large', 'huge'] }], //class 제어 - html로 되도록 확인
+            // [{ direction: 'rtl' }], //class 제어
+            // [{ size: ['small', false, 'large', 'huge'] }], //class 제어 - html로 되도록 확인
             [{ header: [1, 2, 3, 4, 5, 6, false] }], // <h1>, <h2>, <h3>, <h4>, <h5>, <h6>, normal
             [{ font: [] }], // 글꼴 class로 제어
             [{ color: [] }, { background: [] }], //style="color: rgb(230, 0, 0);", style="background-color: rgb(230, 0, 0);"
