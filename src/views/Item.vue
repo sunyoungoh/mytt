@@ -88,7 +88,7 @@
                   <a :href="item" target="_blank" class="mb-2">
                     <BasicImage
                       :src="item || ''"
-                      class="flex-grow-0 content-img mr-2"
+                      class="flex-grow-0 content-img mr-2 mb-2"
                     />
                   </a>
                   <!-- <button class="btn-delete" @click="deleteImg(i)">X</button> -->
