@@ -78,7 +78,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       var quilEditor = document.getElementsByClassName('ql-editor')[0];
-      quilEditor.style.cssText += 'height: 30rem;';
+      quilEditor.style.cssText += 'height: 32rem;';
     });
   },
   methods: {
