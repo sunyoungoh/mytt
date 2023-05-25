@@ -44,6 +44,7 @@
           sm-x-small
           color="primary"
           class="py-1 py-sm-3"
+          :loading="sendLoading"
           elevation="0"
           :disabled="!$store.state.mailUser || !$store.state.mailPassword"
           @click="sendTest(item.itemOptionCode)"
@@ -130,6 +131,7 @@ export default {
       result: '',
       errorMsg: '',
       salesCode: '',
+      sendLoading: false,
     };
   },
   async mounted() {
@@ -171,6 +173,8 @@ export default {
   },
   methods: {
     async sendTest(optionCode) {
+      this.sendLoading = true;
+
       // 파일 받아오기
       let { result, fileName, publicUrl } = await downloadFile(
         this.$store.state.brandId,
@@ -229,6 +233,7 @@ export default {
           this.dialog = true;
         }
         this.sendResult = 'fail';
+        this.sendLoading = false;
       }
     },
 
@@ -241,6 +246,7 @@ export default {
       } else {
         this.postResult = 'fail';
       }
+      this.sendLoading = false;
     },
 
     async downloadFile(optionCode) {
@@ -264,5 +270,9 @@ export default {
 <style scoped>
 a {
   color: #000;
+}
+.v-progress-circular.v-progress-circular--visible.v-progress-circular--indeterminate {
+  width: 15px !important;
+  height: 15px !important;
 }
 </style>
