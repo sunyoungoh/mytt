@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { createImageUrl } from '@/utils/createImageUrl.js';
+import { createImageUrl } from '@/utils/supabaseStorage.js';
 
 import hljs from 'highlight.js';
 import debounce from 'lodash/debounce';
