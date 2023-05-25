@@ -191,6 +191,7 @@ footer > div {
 /* =========== ORDER =========== */
 .order-page-desc {
   padding-bottom: 1rem;
+  padding-left: 2px;
 }
 .order-page-desc ul {
   padding-left: 0.875rem !important;
