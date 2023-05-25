@@ -191,7 +191,7 @@ export default {
         .from('mail')
         .select()
         .eq('item_id', this.item.itemId);
-
+      console.log(mailTemplateData);
       // 해당 상품 템플릿 정보가 있다면 옵션값에 맞는 템플릿 가져오기
       if (mailTemplateData.data.length > 0) {
         const mailTemplate = mailTemplateData.data[0].template;
@@ -270,9 +270,5 @@ export default {
 <style scoped>
 a {
   color: #000;
-}
-.v-progress-circular.v-progress-circular--visible.v-progress-circular--indeterminate {
-  width: 15px !important;
-  height: 15px !important;
 }
 </style>

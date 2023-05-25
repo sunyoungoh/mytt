@@ -374,8 +374,8 @@ export default {
       item: [],
       originContent: '',
       // colorCode: '',
-      content: '',
       // originContentImages: [],
+      content: '',
       contentImages: [],
       loading: false,
       fileArr: [],
@@ -417,8 +417,9 @@ export default {
     },
     mailTemplate() {
       const mailTemplateArr = [];
-      if (this.item.option.length > 0) {
-        const optionArr = this.item.option.detail;
+
+      if (this.item.option?.types?.length > 0) {
+        const optionArr = this.item.option.details;
         optionArr.map((item, i) =>
           mailTemplateArr.push({
             optionCode: item.itemOption,
@@ -453,7 +454,6 @@ export default {
       } else {
         this.fileArr[index] = { zipFile, optionCode };
       }
-      console.log(this.fileArr);
     },
 
     async downloadFile(optionCode) {
@@ -510,12 +510,12 @@ export default {
           imgArr.push(item.imageUrl);
         }
       });
+
       // this.originContentImages = [...imgArr];
       this.contentImages = [...imgArr];
 
       // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
       let originSize = data.outPutValue.size;
-      console.log(originSize);
 
       // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장
       if (originSize) {
@@ -562,7 +562,7 @@ export default {
         .from('mail')
         .select()
         .eq('item_id', this.item.itemid);
-
+      console.log(mailTemplateData);
       // 템플릿이 있다면 데이터 바인딩
       if (mailTemplateData.data.length > 0) {
         const mailTemplate = mailTemplateData.data[0].template;
