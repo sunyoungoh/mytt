@@ -133,6 +133,10 @@ export default {
 </script>
 
 <style>
+.mypage {
+  max-width: 600px !important;
+  margin: 0 auto;
+}
 .v-label,
 .label,
 .v-file-input__text,
