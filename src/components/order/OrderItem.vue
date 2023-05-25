@@ -219,7 +219,7 @@ export default {
           publicUrl: result == 'success' ? publicUrl : '',
         });
         if (status == 200) {
-          // this.postOrder();
+          this.postOrder();
         }
       } catch (error) {
         if (error.response.status == 400) {

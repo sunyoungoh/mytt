@@ -24,47 +24,6 @@
           >메일 발송 기능 관련 안내 보러 가기 >
         </v-btn>
       </div>
-
-      <!-- <v-form ref="form" v-model="valid" lazy-validation class="login-form">
-        <v-text-field
-          ref="naverEmail"
-          placeholder="네이버 이메일을 입력하세요"
-          outlined
-          :rules="[v => !!v || '네이버 이메일을 꼭 입력해주세요']"
-          v-model="naverEmail"
-          hide-details="auto"
-          class="mb-4"
-          required
-          clearable
-        >
-        </v-text-field>
-        <v-text-field
-          ref="naverPass"
-          placeholder="네이버 비밀번호를 입력하세요"
-          outlined
-          type="password"
-          :rules="[v => !!v || '네이버 비밀번호를 꼭 입력해주세요']"
-          v-model="naverPass"
-          hide-details="auto"
-          class="mb-4"
-          required
-          clearable
-        >
-        </v-text-field>
-        <p class="text-center error--text text-subtitle-2">{{ errorMsg }}</p>
-        <v-btn
-          class="font-weight-bold"
-          @click="login"
-          :loading="loading"
-          x-large
-          block
-          color="primary"
-          dark
-          elevation="0"
-          height="56"
-          >브라우저에 저장하기
-        </v-btn>
-      </v-form> -->
       <OrderList
         class="order-list"
         v-if="orderListCount > 0"
