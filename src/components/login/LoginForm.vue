@@ -30,7 +30,7 @@
           </v-text-field>
           <p class="text-center error--text text-subtitle-2">{{ errorMsg }}</p>
           <v-btn
-            class="font-weight-bold"
+            class="font-weight-medinum"
             @click="login"
             :loading="loading"
             x-large
