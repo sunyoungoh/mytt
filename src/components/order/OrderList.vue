@@ -35,7 +35,7 @@
 <script>
 import TableTitle from '@/components/common/table/TableTitle.vue';
 import OrderItem from '@/components/order/OrderItem.vue';
-import { sortOrderList } from '@/utils/sortArr';
+// import { sortOrderList } from '@/utils/sortArr';
 
 export default {
   components: {
@@ -82,7 +82,7 @@ export default {
     sortList(title) {
       this.clickField = title;
       this.orderBy = this.orderBy == 'desc' ? 'asc' : 'desc';
-      this.orderList = sortOrderList(this.orderList, title, this.orderBy);
+      // this.orderList = sortOrderList(this.orderList, title, this.orderBy);
     },
   },
 };
