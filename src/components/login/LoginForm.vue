@@ -71,18 +71,21 @@ export default {
         try {
           // supabase에 등록된 사용자인지 확인
           let { data } = await supabase
-            .from('tenbyten')
+            .from('user')
             .select()
             .eq('brand_id', this.brandId);
+          const userInfo = data[0];
 
           // 등록된 사용자가 맞다면
           if (data.length > 0) {
-            let res = await getBrandInfo(this.apiKey);
+            const apiKey = this.apiKey.trim();
+            let res = await getBrandInfo(apiKey);
             if (res.status == 200 && res.data.brandid == this.brandId) {
               this.$store.dispatch('login', {
-                apiKey: this.apiKey,
+                apiKey: apiKey,
                 brandId: res.data.brandid,
                 brandName: res.data.BrandNameKor,
+                digitalAuthor: userInfo.digital_author,
               });
               this.$router.push({ path: '/' });
             }

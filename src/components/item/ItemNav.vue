@@ -46,7 +46,8 @@ export default {
   methods: {
     async fetchItems() {
       if (this.$store.getters.isLogin) {
-        this.items = await this.$store.dispatch('fetchItems');
+        await this.$store.dispatch('fetchItems');
+        this.items = this.$store.state.items;
         // list active 속성 반영
         this.selectedItem = this.items
           .map(item => item.itemId)

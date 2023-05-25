@@ -1,9 +1,9 @@
 <template>
   <div class="item">
-    <v-container class="item-container mb-8 px-4" v-show="show">
+    <v-container class="item-container mb-8 px-4 pt-0" v-show="show">
       <PageTitle> 상품 수정 </PageTitle>
       <v-row justify="start">
-        <v-col class="d-flex pt-0">
+        <v-col class="d-flex py-0">
           <BasicImage
             :src="item.images?.basicImage"
             class="item-img flex-grow-0 basic-img"
@@ -14,7 +14,7 @@
             <div class="item-title mt-1">
               {{ item.name }}
             </div>
-            <div class="price pt-2 pt-md-3">
+            <div class="price pt-2 pt-md-3 pb-4">
               <template v-if="item.orgprice !== item.sellPrice">
                 <div class="price-origin grey--text grey-darken-3">
                   {{ item.orgprice | comma }}원
@@ -28,7 +28,7 @@
           </div>
         </v-col>
       </v-row>
-      <v-row class="mb-6">
+      <v-row>
         <v-col class="pt-0">
           <div class="edit-wrap">
             <div class="item-status">
@@ -63,9 +63,7 @@
                 <v-radio label="문구필요 주문제작상품" value="M"></v-radio>
               </v-radio-group>
               <div class="d-flex" v-if="division == 'M'">
-                <div class="mt-3 mr-2 text-body-2 label production-day">
-                  예상제작소요일
-                </div>
+                <div class="mt-3 mr-2 label production-day">예상제작소요일</div>
                 <v-text-field
                   outlined
                   class="text-body-2 pb-3"
@@ -74,6 +72,156 @@
                   hide-details
                   suffix="일"
                 ></v-text-field>
+              </div>
+            </div>
+            <!-- 디지털 작가일 경우만 메일 템플릿, 파일 등록 영역 보임 -->
+            <div class="file-upload" v-if="$store.getters.isDigitalAuthor">
+              <InputLabel>
+                <template #title> 메일 템플릿 작성 및 파일 업로드</template>
+                <template #desc>
+                  디지털 상품 발송을 위해 옵션에 해당하는
+                  <span class="font-weight-medium red--text text--lighten-1"
+                    >메일 제목과 내용을 입력하시고 .zip 양식의 파일을 업로드
+                  </span>
+                  해주세요.
+                </template>
+              </InputLabel>
+              <div class="option-wrap pb-1">
+                <template v-if="item.option?.types.length == 0">
+                  <!-- 옵션 없는 경우 -->
+                  <div class="no-option-item mt-2 my-4">
+                    <div class="mail-template">
+                      <v-text-field
+                        outlined
+                        class="pb-3"
+                        v-model="mailTitle[0]"
+                        dense
+                        placeholder="메일 제목을 입력해주세요"
+                        hide-details
+                      ></v-text-field>
+                      <v-textarea
+                        v-model="mailContent[0]"
+                        class="pb-3"
+                        placeholder="메일 내용을 입력해주세요"
+                        outlined
+                        auto-grow
+                        hide-details
+                      />
+                    </div>
+                    <div class="option-input-wrap">
+                      <v-file-input
+                        outlined
+                        dense
+                        class="pt-1"
+                        placeholder="업로드할 파일을 선택해주세요."
+                        hide-details
+                        truncate-length="28"
+                        @change="attachFile($event, '0000', 0)"
+                        accept="application/zip"
+                      ></v-file-input>
+                      <div class="d-flex align-center pt-2">
+                        <v-btn
+                          color="primary"
+                          text
+                          plain
+                          :ripple="false"
+                          class="px-0 font-weight-regular"
+                          @click="downloadFile('0000')"
+                        >
+                          기존 파일 다운로드
+                        </v-btn>
+                        <div class="grey--text text-light-3 mx-2 d-inline">
+                          |
+                        </div>
+                        <v-btn
+                          color="primary"
+                          text
+                          plain
+                          :ripple="false"
+                          class="px-0 font-weight-regular"
+                          @click="deleteFile('0000')"
+                        >
+                          기존 파일 삭제
+                        </v-btn>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                <div class="option-item" v-else>
+                  <div
+                    v-for="(option, i) in item.option?.details"
+                    :key="i"
+                    class="pt-4 pb-3 px-4 mt-2 my-4 item"
+                  >
+                    <div class="label pb-2">
+                      <span class="font-weight-medium">옵션{{ i + 1 }}</span>
+                      <!-- 옵션명  -->
+                      <div class="ml-2 option-detail d-inline">
+                        <span v-for="(type, j) in item.option?.types" :key="j">
+                          {{ type }} : {{ option.optionName[j] }}
+                          <span v-if="j < item.option?.types.length - 1"
+                            >/</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="mail-template">
+                      <v-text-field
+                        outlined
+                        class="pb-3"
+                        v-model="mailTitle[i]"
+                        dense
+                        placeholder="메일 제목을 입력해주세요"
+                        hide-details
+                      ></v-text-field>
+                      <v-textarea
+                        v-model="mailContent[i]"
+                        class="pb-3"
+                        placeholder="메일 내용을 입력해주세요"
+                        outlined
+                        auto-grow
+                        hide-details
+                      />
+                    </div>
+                    <div class="option-input-wrap">
+                      <v-file-input
+                        outlined
+                        dense
+                        class="pt-1"
+                        truncate-length="28"
+                        placeholder="업로드할 파일을 선택해주세요."
+                        hide-details
+                        @change="attachFile($event, option.itemOption, i)"
+                        accept="application/zip"
+                      ></v-file-input>
+                      <div class="d-flex align-center pt-2">
+                        <v-btn
+                          color="primary"
+                          text
+                          plain
+                          :ripple="false"
+                          class="px-0 font-weight-regular"
+                          @click="downloadFile(option.itemOption)"
+                        >
+                          기존 파일 다운로드
+                        </v-btn>
+                        <div class="grey--text text-light-3 mx-2 d-inline">
+                          |
+                        </div>
+                        <v-btn
+                          color="primary"
+                          text
+                          plain
+                          :ripple="false"
+                          class="px-0 font-weight-regular"
+                          @click="deleteFile(option.itemOption)"
+                        >
+                          기존 파일 삭제
+                        </v-btn>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="item-content-images" v-if="contentImages?.length > 0">
@@ -91,7 +239,6 @@
                       class="flex-grow-0 content-img mr-2 mb-2"
                     />
                   </a>
-                  <!-- <button class="btn-delete" @click="deleteImg(i)">X</button> -->
                 </div>
               </div>
             </div>
@@ -173,6 +320,7 @@
             </div>
             <ResultDialog
               :dialog="dialog"
+              :title="dialogTitle"
               :result="result"
               :errorMsg="errorMsg"
               @close="closeDialog"
@@ -196,6 +344,11 @@ import HtmlEditor from '@/components/HtmlEditor.vue';
 
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '@/utils/supabase.js';
+import {
+  uploadFile,
+  downloadFile,
+  deleteFile,
+} from '@/utils/supabaseStorage.js';
 
 export default {
   components: {
@@ -225,10 +378,14 @@ export default {
       // originContentImages: [],
       contentImages: [],
       loading: false,
+      fileArr: [],
       dialog: false,
+      dialogTitle: '수정',
       result: '',
       errorMsg: '',
       salesCode: '',
+      mailTitle: [],
+      mailContent: [],
       salesStatus: '',
       division: '',
       productionDay: '',
@@ -258,6 +415,26 @@ export default {
         ((this.item.orgprice - this.item.sellPrice) / this.item.orgprice) * 100,
       );
     },
+    mailTemplate() {
+      const mailTemplateArr = [];
+      if (this.item.option.length > 0) {
+        const optionArr = this.item.option.detail;
+        optionArr.map((item, i) =>
+          mailTemplateArr.push({
+            optionCode: item.itemOption,
+            title: this.mailTitle[i],
+            content: this.mailContent[i],
+          }),
+        );
+      } else {
+        mailTemplateArr.push({
+          optionCode: '0000',
+          title: this.mailTitle[0],
+          content: this.mailContent[0],
+        });
+      }
+      return mailTemplateArr;
+    },
   },
   watch: {
     $route() {
@@ -267,7 +444,55 @@ export default {
     },
   },
   methods: {
+    async attachFile(file, optionCode, index) {
+      this.errorMsg = '';
+      const zipFile = file;
+
+      if (!zipFile) {
+        this.fileArr[index] = {};
+      } else {
+        this.fileArr[index] = { zipFile, optionCode };
+      }
+      console.log(this.fileArr);
+    },
+
+    async downloadFile(optionCode) {
+      let { result, publicUrl } = await downloadFile(
+        this.item.brandId,
+        this.item.itemid,
+        optionCode,
+      );
+      if (result == 'success') {
+        window.open(publicUrl, '_blank'); // 파일 다운로드
+      } else {
+        this.result = 'fail';
+        this.dialogTitle = '다운로드';
+        this.errorMsg = '등록된 파일이 없습니다.';
+        this.dialog = true;
+      }
+    },
+
+    async deleteFile(optionCode) {
+      let result = await deleteFile(
+        this.item.brandId,
+        this.item.itemid,
+        optionCode,
+      );
+      this.dialogTitle = '파일 삭제';
+
+      // 모달처리
+      if (result == 'success') {
+        this.result = 'success';
+        this.errorMsg = '';
+      } else {
+        this.result = 'fail';
+        this.errorMsg = '';
+      }
+      this.dialog = true;
+    },
+
     async fetchItem() {
+      // ======== 텐바이텐 상품 정보 패치 ========
       let { data } = await getItem(this.$route.params.id);
       this.item = data.outPutValue;
       this.content = data.outPutValue.content;
@@ -325,12 +550,68 @@ export default {
           this.selectedSizeUint = { text: '직접입력', value: '' };
         }
       }
+
+      // ======== 메일 템플릿 정보 패치 ========
+
+      // 메일 템플릿 초기화
+      this.mailTitle = [];
+      this.mailContent = [];
+
+      // supabase에서 메일 템플릿 가져오기
+      const mailTemplateData = await supabase
+        .from('mail')
+        .select()
+        .eq('item_id', this.item.itemid);
+
+      // 템플릿이 있다면 데이터 바인딩
+      if (mailTemplateData.data.length > 0) {
+        const mailTemplate = mailTemplateData.data[0].template;
+        mailTemplate.map(item => {
+          this.mailTitle.push(item.title);
+          this.mailContent.push(item.content);
+        });
+      }
       window.scrollTo(0, 0);
     },
+
     async editItem() {
       this.loading = true;
+      this.dialogTitle = '수정';
+      this.errorMsg = '';
       this.result = '';
+
       try {
+        // 메일 템플릿 등록
+        const templateResult = await supabase.from('mail').upsert(
+          {
+            brand_id: this.item.brandId,
+            item_id: this.item.itemid,
+            template: this.mailTemplate,
+          },
+          { onConflict: 'item_id' },
+        );
+
+        console.log('템플릿 등록 결과', templateResult);
+        if (templateResult.status !== 201) return (this.result = 'fail');
+
+        // 서버 zip 첨부 파일 등록
+        this.fileArr.map(async item => {
+          if (item.zipFile) {
+            let result = await uploadFile(
+              item.zipFile,
+              item.optionCode,
+              this.item.brandId,
+              this.item.itemid,
+            );
+            if (result !== 'success')
+              return (
+                (this.result = 'fail'),
+                (this.errorMsg = '파일 등록을 실패하였습니다.')
+              );
+          }
+        });
+
+        // 텐바이텐 상세페이지 수정
         let statusResult = '';
         let infoEditResult = '';
         // let imageEditResult = '';
@@ -357,7 +638,7 @@ export default {
         //   imageEditResult = data.status;
         // }
 
-        // 수정 api 호출
+        // 텐바이텐 상품 정보 수정 api 호출
         let { status } = await updateItemInfo({
           itemId: this.item.itemid,
           content: this.content,
@@ -440,7 +721,9 @@ export default {
   line-height: 1.5 !important;
 }
 .v-label,
-.label {
+.label,
+.v-file-input__text,
+.v-text-field__slot {
   font-size: 14px !important;
   font-family: 'Spoqa Han Sans Neo', 'sans-serif' !important;
 }
@@ -482,7 +765,7 @@ export default {
   margin-right: 0px;
 }
 
-.v-footer {
+footer.v-footer {
   margin-bottom: 70px;
 }
 

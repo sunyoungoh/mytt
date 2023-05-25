@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="justify-center pt-6">
         <p class="text-center mb-0">
-          수정
+          {{ title }}
           <span
             v-if="result == 'success'"
             class="font-weight-bold success--text"
@@ -37,6 +37,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    title: { type: String, default: '' },
     result: {
       type: String,
       default: '',

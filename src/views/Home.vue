@@ -6,7 +6,7 @@
           {{ $store.state.brandName }}님, 등록된 상품은 총
         </template>
         <template v-else> {{ searchMsg }} 총 </template>
-        <span class="red--text text--light-1"> {{ itemsCount }}</span
+        <span class="red--text text--lighten-1"> {{ itemsCount }}</span
         >개입니다.
       </PageTitle>
       <div
@@ -36,8 +36,9 @@ export default {
     ItemList,
   },
   async mounted() {
-    this.originItems = await this.$store.dispatch('fetchItems');
-    this.searchItems = this.originItems;
+    await this.$store.dispatch('fetchItems');
+    this.originItems = [...this.$store.state.items];
+    this.searchItems = [...this.$store.state.items];
     this.itemsCount = this.originItems.length;
   },
   data() {
@@ -68,8 +69,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.v-footer {
-  margin-bottom: 0;
-}
-</style>
+<style scoped></style>

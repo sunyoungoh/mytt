@@ -50,7 +50,7 @@ const updateItemStatus = (itemId, sellYN) => {
 const updateItemImages = (itemId, colorCode, images) => {
   return instanceAuth.put('/tenbyten/item/images', {
     itemId: itemId,
-    colorCode: colorCode, // 컬러코드 에러로 실행못함
+    colorCode: colorCode,
     images: images,
   });
 };

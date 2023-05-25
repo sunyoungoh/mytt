@@ -25,6 +25,20 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Login.vue'),
   },
+  {
+    path: '/order',
+    name: 'Order',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Order.vue'),
+    meta: [{ authRequired: true }],
+  },
+  {
+    path: '/mypage',
+    name: 'Mypage',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Mypage.vue'),
+    meta: { authRequired: true },
+  },
 ];
 
 const router = new VueRouter({
@@ -34,6 +48,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function (to, from, next) {
+  // 디지털 작가가 아닐 시 페이지 접근 불가
+  if (to.name == 'Order' && !store.getters.isDigitalAuthor) {
+    next('/');
+  }
+
+  // 로그인 상태 확인
   if (
     to.matched.some(function (routeInfo) {
       return routeInfo.meta.authRequired;
