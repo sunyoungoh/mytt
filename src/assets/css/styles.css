@@ -369,6 +369,9 @@ span.date {
     border-top: 2px solid var(--charcoal);
     border-bottom: none;
   }
+  #no-more-tables tr:nth-last-of-type(1) {
+    border-bottom: 2px solid var(--charcoal);
+  }
 
   #no-more-tables td {
     /* Behave  like a "row" */

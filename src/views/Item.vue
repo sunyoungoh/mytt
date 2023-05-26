@@ -29,7 +29,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="pt-0">
+        <v-col class="pt-0 pb-16 mb-16">
           <div class="edit-wrap">
             <div class="item-status">
               <InputLabel>
