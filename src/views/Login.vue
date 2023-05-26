@@ -12,4 +12,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+footer.v-footer {
+  margin-bottom: 0;
+}
+</style>
