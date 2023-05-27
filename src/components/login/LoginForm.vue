@@ -50,6 +50,7 @@
 <script>
 import { getBrandInfo } from '@/api/items';
 import { supabase } from '@/utils/supabase.js';
+import { getEncodeKey } from '@/utils/crypto';
 
 export default {
   data() {
@@ -78,7 +79,9 @@ export default {
 
           // 등록된 사용자가 맞다면
           if (data.length > 0) {
-            const apiKey = this.apiKey.trim();
+            // apiKey 암호화
+            const apiKey = getEncodeKey(this.apiKey.trim());
+            // 브랜드 정보 가져오기
             let res = await getBrandInfo(apiKey);
             if (res.status == 200 && res.data.brandid == this.brandId) {
               this.$store.dispatch('login', {

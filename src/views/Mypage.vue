@@ -85,7 +85,7 @@
 import PageTitle from '@/components/common/PageTitle.vue';
 import InputLabel from '@/components/common/InputLabel.vue';
 import ResultDialog from '@/components/common/ResultDialog.vue';
-import { decodePass } from '@/utils/crypto.js';
+import { getDecodeKey } from '@/utils/crypto.js';
 
 export default {
   components: {
@@ -96,7 +96,7 @@ export default {
   async mounted() {
     await this.$store.dispatch('fetchNaverAuth');
     this.naverEmail = this.$store.state.mailUser;
-    this.naverPassword = decodePass(this.$store.state.mailPassword);
+    this.naverPassword = getDecodeKey(this.$store.state.mailPassword);
   },
   data() {
     return {
@@ -111,7 +111,7 @@ export default {
   },
   computed: {
     originPassword() {
-      return decodePass(this.$store.state.mailPassword);
+      return getDecodeKey(this.$store.state.mailPassword);
     },
   },
   methods: {

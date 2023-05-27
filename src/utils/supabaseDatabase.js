@@ -1,10 +1,10 @@
 import { supabase } from '@/utils/supabase.js';
-import { encodePass } from '@/utils/crypto.js';
+import { getEncodeKey } from '@/utils/crypto.js';
 
 // 네이버 인증정보 업데이트
 export const updateNaverAuth = async (email, password, brandId) => {
   // 비밀번호 암호화
-  const encrypted = encodePass(password);
+  const encrypted = getEncodeKey(password);
 
   // 인증정보 DB 저장
   const { data, error } = await supabase

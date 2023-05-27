@@ -3,7 +3,7 @@ import store from '@/store/index';
 
 const getBrandInfo = apiKey => {
   return instance.get('/tenbyten/brandinfo', {
-    headers: { Authorization: `bearer ${apiKey}` },
+    headers: { Authorization: apiKey },
   });
 };
 

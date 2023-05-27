@@ -4,7 +4,7 @@ export function setInterceptors(instance) {
   // Add a request interceptor
   instance.interceptors.request.use(
     function (config) {
-      config.headers.Authorization = `bearer ${store.state.apiKey}`;
+      config.headers.Authorization = store.state.apiKey;
       return config;
     },
     function (error) {
