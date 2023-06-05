@@ -223,7 +223,7 @@
                 </div>
               </div>
             </div>
-            <div class="item-content-images" v-if="contentImages?.length > 0">
+            <div class="item-content-images" v-if="contentImages?.length">
               <InputLabel>
                 <template #title> 상품 설명 이미지 </template>
                 <template #desc>
@@ -496,7 +496,7 @@ export default {
       const { data } = await getItem(this.$route.params.id);
       const item = data.outPutValue;
       this.item = item;
-      this.content = item.content;
+      this.content = item.content.replaceAll('http:', '');
       this.originContent = item.content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
@@ -507,9 +507,11 @@ export default {
       this.itemOptions = !this.itemTypes.length
         ? []
         : this.item.option.details.filter(item => item.Using == 'Y');
+      console.log(item.content);
+      console.log(this.content);
 
       // 상품 상세 이미지 저장
-      let imgArr = [];
+      const imgArr = [];
       data.outPutValue.images.mainImages.map(item => {
         if (item.imageUrl.endsWith('.jpg')) {
           imgArr.push(item.imageUrl);
@@ -533,7 +535,7 @@ export default {
           let result = this.sizeUnit
             .map(item => originSize.indexOf(`(${item.value})`))
             .filter(item => item >= 0);
-          return result.length > 0 ? true : false;
+          return result.length ? true : false;
         };
 
         // 사이즈 단위 있나 체크
@@ -570,7 +572,7 @@ export default {
         console.log('메일 템플릿 데이터', mailTemplateData);
 
         // 템플릿이 있다면 데이터 바인딩
-        if (mailTemplateData.data.length > 0) {
+        if (mailTemplateData.data.length) {
           const mailTemplate = mailTemplateData.data[0].template;
           mailTemplate.map(item => {
             this.mailTitle.push(item.title);
