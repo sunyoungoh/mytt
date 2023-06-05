@@ -87,8 +87,8 @@
                 </template>
               </InputLabel>
               <div class="option-wrap pb-1">
-                <template v-if="item.option?.types.length == 0">
-                  <!-- 옵션 없는 경우 -->
+                <!-- 옵션 없는 경우 -->
+                <template v-if="!itemTypes.length">
                   <div class="no-option-item mt-2 my-4">
                     <div class="mail-template">
                       <v-text-field
@@ -147,9 +147,10 @@
                     </div>
                   </div>
                 </template>
+                <!-- 옵션이 있는 경우 -->
                 <div class="option-item" v-else>
                   <div
-                    v-for="(option, i) in item.option?.details"
+                    v-for="(option, i) in itemOptions"
                     :key="i"
                     class="pt-4 pb-3 px-4 mt-2 my-4 item"
                   >
@@ -157,11 +158,9 @@
                       <span class="font-weight-medium">옵션{{ i + 1 }}</span>
                       <!-- 옵션명  -->
                       <div class="ml-2 option-detail d-inline">
-                        <span v-for="(type, j) in item.option?.types" :key="j">
+                        <span v-for="(type, j) in itemTypes" :key="j">
                           {{ type }} : {{ option.optionName[j] }}
-                          <span v-if="j < item.option?.types.length - 1"
-                            >/</span
-                          >
+                          <span v-if="j < itemTypes.length - 1">/</span>
                         </span>
                       </div>
                     </div>
@@ -391,6 +390,8 @@ export default {
       productionDay: '',
       size: '',
       material: '',
+      itemTypes: [],
+      itemOptions: [],
       selectedSizeUint: { text: '직접입력', value: '' },
       sizeUnit: [
         { text: '직접입력', value: '' },
@@ -417,8 +418,7 @@ export default {
     },
     mailTemplate() {
       const mailTemplateArr = [];
-
-      if (this.item.option?.types?.length > 0) {
+      if (this.item.option?.types?.length) {
         const optionArr = this.item.option.details;
         optionArr.map((item, i) =>
           mailTemplateArr.push({
@@ -493,20 +493,25 @@ export default {
 
     async fetchItem() {
       // ======== 텐바이텐 상품 정보 패치 ========
-      let { data } = await getItem(this.$route.params.id);
-      this.item = data.outPutValue;
-      this.content = data.outPutValue.content;
-      this.originContent = data.outPutValue.content;
+      const { data } = await getItem(this.$route.params.id);
+      const item = data.outPutValue;
+      this.item = item;
+      this.content = item.content;
+      this.originContent = item.content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
-      this.division = data.outPutValue.division;
-      this.productionDay = data.outPutValue.productionDay;
-      this.material = data.outPutValue.material;
+      this.division = item.division;
+      this.productionDay = item.productionDay;
+      this.material = item.material;
+      this.itemTypes = item.option?.types;
+      this.itemOptions = !this.itemTypes.length
+        ? []
+        : this.item.option.details.filter(item => item.Using == 'Y');
 
       // 상품 상세 이미지 저장
       let imgArr = [];
       data.outPutValue.images.mainImages.map(item => {
-        if (item.imageUrl.search('.jpg') > 0) {
+        if (item.imageUrl.endsWith('.jpg')) {
           imgArr.push(item.imageUrl);
         }
       });
@@ -551,26 +556,29 @@ export default {
         }
       }
 
-      // ======== 메일 템플릿 정보 패치 ========
+      // ======== 디지털 작가면 메일 템플릿 정보 패치 ========
+      if (this.$store.getters.isDigitalAuthor) {
+        // 메일 템플릿 초기화
+        this.mailTitle = [];
+        this.mailContent = [];
 
-      // 메일 템플릿 초기화
-      this.mailTitle = [];
-      this.mailContent = [];
+        // supabase에서 메일 템플릿 가져오기
+        const mailTemplateData = await supabase
+          .from('mail')
+          .select()
+          .eq('item_id', this.item.itemid);
+        console.log('메일 템플릿 데이터', mailTemplateData);
 
-      // supabase에서 메일 템플릿 가져오기
-      const mailTemplateData = await supabase
-        .from('mail')
-        .select()
-        .eq('item_id', this.item.itemid);
-      console.log(mailTemplateData);
-      // 템플릿이 있다면 데이터 바인딩
-      if (mailTemplateData.data.length > 0) {
-        const mailTemplate = mailTemplateData.data[0].template;
-        mailTemplate.map(item => {
-          this.mailTitle.push(item.title);
-          this.mailContent.push(item.content);
-        });
+        // 템플릿이 있다면 데이터 바인딩
+        if (mailTemplateData.data.length > 0) {
+          const mailTemplate = mailTemplateData.data[0].template;
+          mailTemplate.map(item => {
+            this.mailTitle.push(item.title);
+            this.mailContent.push(item.content);
+          });
+        }
       }
+
       window.scrollTo(0, 0);
     },
 
