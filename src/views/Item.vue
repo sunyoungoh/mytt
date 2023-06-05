@@ -496,7 +496,7 @@ export default {
       const { data } = await getItem(this.$route.params.id);
       const item = data.outPutValue;
       this.item = item;
-      this.content = item.content.replaceAll('http:', '');
+      this.content = item.content;
       this.originContent = item.content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
@@ -507,8 +507,6 @@ export default {
       this.itemOptions = !this.itemTypes.length
         ? []
         : this.item.option.details.filter(item => item.Using == 'Y');
-      console.log(item.content);
-      console.log(this.content);
 
       // 상품 상세 이미지 저장
       const imgArr = [];
