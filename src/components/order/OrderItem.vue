@@ -33,7 +33,7 @@
         outlined
         color="primary"
         class="py-1 py-sm-3"
-        @click="downloadFile(item.itemOptionCode)"
+        @click="clickDownloadBtn(item.itemOptionCode)"
       >
         다운로드
       </v-btn>
@@ -47,7 +47,7 @@
           :loading="sendLoading"
           elevation="0"
           :disabled="!$store.state.mailUser || !$store.state.mailPassword"
-          @click="sendTest(item.itemOptionCode)"
+          @click="sendMail(item.itemOptionCode)"
         >
           메일 발송
         </v-btn>
@@ -172,11 +172,11 @@ export default {
     },
   },
   methods: {
-    async sendTest(optionCode) {
+    async sendMail(optionCode) {
       this.sendLoading = true;
 
       // 파일 받아오기
-      let { result, fileName, publicUrl } = await downloadFile(
+      const { result, fileName, publicUrl } = await downloadFile(
         this.$store.state.brandId,
         this.item.itemId,
         optionCode,
@@ -187,26 +187,20 @@ export default {
       let mailContent = '';
 
       // supabase에서 메일 템플릿 가져오기
-      const mailTemplateData = await supabase
+      const { data } = await supabase
         .from('mail')
         .select()
         .eq('item_id', this.item.itemId);
-      console.log(mailTemplateData);
-      // 해당 상품 템플릿 정보가 있다면 옵션값에 맞는 템플릿 가져오기
-      if (mailTemplateData.data.length > 0) {
-        const mailTemplate = mailTemplateData.data[0].template;
-        if (optionCode) {
-          const filterTemplate = mailTemplate.filter(
-            item => item.optionCode == optionCode,
-          );
-          console.log('filterTemplate', filterTemplate);
-          mailTitle = filterTemplate[0].title;
-          mailContent = filterTemplate[0].content;
-        }
-      }
 
-      // 메일 발송 전 네이버 인증 정보 갱신
-      this.$store.dispatch('fetchNaverAuth');
+      // 해당 상품 템플릿 정보가 있다면 옵션값에 맞는 템플릿 가져오기
+      if (data.length) {
+        const { template } = data[0];
+        const { title, content } = template
+          .filter(item => item.optionCode == optionCode)
+          .shift();
+        mailTitle = title;
+        mailContent = content;
+      }
 
       // 메일 전송하고 송장등록하기
       try {
@@ -218,7 +212,7 @@ export default {
           password: this.$store.state.mailPassword,
           toEmail: this.toEmail,
           title: mailTitle,
-          content: mailContent,
+          content: mailContent.replaceAll('\n', '<br/>'),
           fileName: result == 'success' ? fileName : '',
           publicUrl: result == 'success' ? publicUrl : '',
         });
@@ -236,7 +230,6 @@ export default {
         this.sendLoading = false;
       }
     },
-
     async postOrder() {
       const { data } = await dispatchOrder(this.dispatchData);
       console.log(data);
@@ -248,9 +241,8 @@ export default {
       }
       this.sendLoading = false;
     },
-
-    async downloadFile(optionCode) {
-      let { result, publicUrl } = await downloadFile(
+    async clickDownloadBtn(optionCode) {
+      const { result, publicUrl } = await downloadFile(
         this.$store.state.brandId,
         this.item.itemId,
         optionCode,

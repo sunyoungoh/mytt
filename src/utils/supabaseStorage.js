@@ -96,7 +96,7 @@ export const downloadFile = async (brandId, itemId, optionCode) => {
   const data = await lastUploadFile(bucket, brandId, searchFileName);
 
   // 파일이 있으면 다운로드
-  if (data.length > 0) {
+  if (data.length) {
     const fileName = data[0].name;
     const filePath = `${brandId}/${data[0].name}`;
 
@@ -121,11 +121,11 @@ export const deleteFile = async (brandId, itemId, optionCode) => {
   const data = await lastUploadFile(bucket, brandId, searchFileName);
 
   // 파일이 있으면 삭제
-  if (data.length > 0) {
+  if (data.length) {
     const filePath = `${brandId}/${data[0].name}`;
     const deleteResult = await supabase.storage.from(bucket).remove(filePath);
     // 삭제된 데이터가 있으면 success, 오류가 났으면 fail
-    return deleteResult.data.length > 0 ? 'success' : 'fail';
+    return deleteResult.data.length ? 'success' : 'fail';
   } else {
     // 검색된 파일이 없을 시
     return 'success';

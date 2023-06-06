@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container class="mb-8">
-      <PageTitle v-if="$store.state.brandName !== ''" class="text-center">
+      <PageTitle v-if="$store.state.brandName" class="text-center">
         <template v-if="!isSearch">
           {{ $store.state.brandName }}님, 등록된 상품은 총
         </template>

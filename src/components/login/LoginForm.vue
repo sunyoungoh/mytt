@@ -78,7 +78,7 @@ export default {
           const userInfo = data[0];
 
           // 등록된 사용자가 맞다면
-          if (data.length > 0) {
+          if (data.length) {
             // apiKey 암호화
             const apiKey = getEncodeKey(this.apiKey.trim());
             // 브랜드 정보 가져오기

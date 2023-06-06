@@ -495,22 +495,31 @@ export default {
       // ======== 텐바이텐 상품 정보 패치 ========
       const { data } = await getItem(this.$route.params.id);
       const item = data.outPutValue;
+      const {
+        content,
+        division,
+        productionDay,
+        material,
+        option,
+        images,
+        size,
+      } = item;
       this.item = item;
-      this.content = item.content;
-      this.originContent = item.content;
+      this.content = content;
+      this.originContent = content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
-      this.division = item.division;
-      this.productionDay = item.productionDay;
-      this.material = item.material;
-      this.itemTypes = item.option?.types;
+      this.division = division;
+      this.productionDay = productionDay;
+      this.material = material;
+      this.itemTypes = option.types;
       this.itemOptions = !this.itemTypes.length
         ? []
-        : this.item.option.details.filter(item => item.Using == 'Y');
+        : option.details.filter(item => item.Using == 'Y');
 
       // 상품 상세 이미지 저장
       const imgArr = [];
-      data.outPutValue.images.mainImages.map(item => {
+      images.mainImages.map(item => {
         if (item.imageUrl.endsWith('.jpg')) {
           imgArr.push(item.imageUrl);
         }
@@ -519,69 +528,59 @@ export default {
       // this.originContentImages = [...imgArr];
       this.contentImages = [...imgArr];
 
-      // 사이즈 단위까지 함께 전송되어 숫자만 추출하여 저장 ex) 3*5(cm)
-      let originSize = data.outPutValue.size;
-
-      // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장
-      if (originSize) {
-        // 단위 시작 끝 인덱스
-        let unitStartIndex = originSize.indexOf('(');
-        let unitEndIndex = originSize.indexOf(')');
-
-        // 사이즈 단위가 있는지 찾는 함수
+      // 사이즈가 비어있지 않다면 사이즈와 단위 분리하여 저장 ex) 3*5(cm)
+      if (size) {
+        // 사이즈 문자열 끝에 단위가 있는지 찾는 함수
         const findUnit = () => {
-          let result = this.sizeUnit
-            .map(item => originSize.indexOf(`(${item.value})`))
-            .filter(item => item >= 0);
-          return result.length ? true : false;
+          let unit;
+          this.sizeUnit.map(item => {
+            if (size.endsWith(`(${item.value})`)) unit = item.value;
+          });
+          return unit;
         };
 
-        // 사이즈 단위 있나 체크
-        let existUnit = findUnit();
+        // 사이즈 단위 찾기
+        const existUnit = findUnit();
 
         if (existUnit) {
-          // 단위가 끝에 (cm) 형태로 있으면 잘라서 저장
-          if (unitStartIndex > 0 && unitEndIndex + 1 == originSize.length) {
-            // 사이즈 숫자 저장
-            this.size = originSize.slice(0, unitStartIndex);
-            // () 괄호 제거 후 사이즈 단위만 저장
-            let originSizeUnit = originSize.slice(unitStartIndex + 1, -1);
-            this.selectedSizeUint = this.sizeUnit.filter(
-              item => item.value == originSizeUnit,
-            )[0];
-          }
+          const unitStartIndex = size.lastIndexOf('(');
+          this.size = size.slice(0, unitStartIndex); // 사이즈 저장
+          this.selectedSizeUint = this.sizeUnit.filter(
+            item => item.value == existUnit, // selectbox 단위 선택
+          )[0];
         } else {
-          this.size = originSize;
+          this.size = size;
           this.selectedSizeUint = { text: '직접입력', value: '' };
         }
       }
 
       // ======== 디지털 작가면 메일 템플릿 정보 패치 ========
       if (this.$store.getters.isDigitalAuthor) {
-        // 메일 템플릿 초기화
-        this.mailTitle = [];
-        this.mailContent = [];
-
-        // supabase에서 메일 템플릿 가져오기
-        const mailTemplateData = await supabase
-          .from('mail')
-          .select()
-          .eq('item_id', this.item.itemid);
-        console.log('메일 템플릿 데이터', mailTemplateData);
-
-        // 템플릿이 있다면 데이터 바인딩
-        if (mailTemplateData.data.length) {
-          const mailTemplate = mailTemplateData.data[0].template;
-          mailTemplate.map(item => {
-            this.mailTitle.push(item.title);
-            this.mailContent.push(item.content);
-          });
-        }
+        this.fetchMailTemplate();
       }
 
       window.scrollTo(0, 0);
     },
+    async fetchMailTemplate() {
+      // 메일 템플릿 초기화
+      this.mailTitle = [];
+      this.mailContent = [];
 
+      // supabase에서 메일 템플릿 가져오기
+      const { data } = await supabase
+        .from('mail')
+        .select()
+        .eq('item_id', this.item.itemid);
+
+      // 템플릿이 있다면 데이터 바인딩
+      if (data?.length) {
+        const { template } = data[0];
+        template.map(item => {
+          this.mailTitle.push(item.title);
+          this.mailContent.push(item.content);
+        });
+      }
+    },
     async editItem() {
       this.loading = true;
       this.dialogTitle = '수정';

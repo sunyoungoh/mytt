@@ -16,7 +16,7 @@ export const updateNaverAuth = async (email, password, brandId) => {
     .eq('brand_id', brandId)
     .select();
 
-  if (data.length > 0) {
+  if (data.length) {
     return data[0];
   } else {
     console.log(error);
@@ -34,7 +34,7 @@ export const getNaverAuth = async brandId => {
     console.log(error);
   }
   // 네이버 인증 정보가 있으면 return
-  if (data.length > 0) {
+  if (data.length) {
     const naverAuth = data[0];
     const userEmail = naverAuth.naver_email;
     const userPass = naverAuth.naver_password;

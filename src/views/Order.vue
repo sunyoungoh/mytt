@@ -3,7 +3,7 @@
     <v-container class="mb-8 order px-4" fluid>
       <PageTitle>
         주문내역
-        <template v-if="orderListCount > 0">
+        <template v-if="orderListCount">
           <span class="red--text text--lighten-1">{{ orderListCount }}</span
           >건
         </template>
@@ -24,11 +24,7 @@
           >메일 발송 기능 관련 안내 보러 가기 >
         </v-btn>
       </div>
-      <OrderList
-        class="order-list"
-        v-if="orderListCount > 0"
-        :items="orderList"
-      />
+      <OrderList class="order-list" v-if="orderListCount" :items="orderList" />
     </v-container>
   </div>
 </template>
@@ -45,8 +41,9 @@ export default {
   },
   mounted() {
     this.$nextTick(async () => {
-      await getNewOrders();
-      let { data } = await getReadyOrders();
+      this.$store.dispatch('fetchNaverAuth'); // 발송 메일 정보 패치
+      await getNewOrders(); // 신규 주문 조회
+      let { data } = await getReadyOrders(); // 배송 준비 중 주문 조회
       this.orderList = data;
     });
   },
