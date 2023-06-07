@@ -3,7 +3,7 @@
     absolute
     permanent
     hide-overlay
-    width="200"
+    width="220"
     class="d-none d-md-flex py-16"
   >
     <v-list dense nav>
@@ -17,6 +17,7 @@
         >
           <v-list-item-content>
             <v-list-item-title class="font-weight-regular">
+              <ItemNavThumb :itemId="item.itemId" />
               {{ item.name }}
             </v-list-item-title>
           </v-list-item-content>
@@ -27,7 +28,12 @@
 </template>
 
 <script>
+import ItemNavThumb from '@/components/item/ItemNavThumb';
+
 export default {
+  components: {
+    ItemNavThumb,
+  },
   async mounted() {
     this.fetchItems();
   },
