@@ -341,7 +341,6 @@ import SalesChip from '@/components/common/SalesChip.vue';
 import InputLabel from '@/components/common/InputLabel.vue';
 import HtmlEditor from '@/components/HtmlEditor.vue';
 
-import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '@/utils/supabase.js';
 import {
   uploadFile,
@@ -667,35 +666,6 @@ export default {
         this.dialog = true;
       }
     },
-    async createImageUrl(file) {
-      console.log(file);
-      try {
-        const blob = file;
-
-        if (!blob) {
-          return;
-        }
-        const key = uuidv4();
-        const bucket = 'images'; // supabase 에 미리 만들어둔 public 버킷 이름
-
-        await supabase.storage.from(bucket).upload(key, blob, {
-          cacheControl: '3600',
-        });
-
-        const { publicUrl } = await supabase.storage
-          .from(bucket)
-          .getPublicUrl(key).data;
-        console.log(publicUrl);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    onFileChange(file) {
-      if (!file) {
-        return;
-      }
-      this.createImageUrl(file);
-    },
     closeDialog() {
       this.dialog = false;
       if (this.salesStatus !== this.$route.params.salesCode) {
@@ -778,7 +748,7 @@ footer.v-footer {
 
 @media screen and (min-width: 960px) {
   .v-footer {
-    margin-left: 200px;
+    margin-left: 220px;
   }
 }
 </style>
