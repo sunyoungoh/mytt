@@ -98,25 +98,21 @@ export default {
       // 속성 써주기
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
+      input.setAttribute('multiple', '');
       input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-      // input이 클릭되면 파일 선택창이 나타난다.
 
-      // input에 변화가 생긴다면 = 이미지를 선택
-      input.addEventListener('change', async () => {
-        const file = input.files[0];
-
-        try {
-          // 파일 업로드 api 호출
-          const imgUrl = await createImageUrl(file);
-
-          // 현재 에디터 커서 위치 조회
-          const range = this.editor.getSelection();
-
-          // 커서 위치에 이미지 삽입
-          this.editor.insertEmbed(range.index, 'image', imgUrl);
-        } catch (error) {
-          console.log('error');
-        }
+      // input 변화가 생기면 이미지 업로드
+      input.addEventListener('change', () => {
+        const files = [...input.files];
+        files.map(async file => {
+          try {
+            const imgUrl = await createImageUrl(file); // 파일 업로드 api 호출
+            const range = this.editor.getSelection(); // 현재 에디터 커서 위치 조회
+            this.editor.insertEmbed(range.index, 'image', imgUrl); // 커서 위치에 이미지 삽입
+          } catch (error) {
+            console.log('error');
+          }
+        });
       });
     },
   },
