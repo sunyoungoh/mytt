@@ -245,9 +245,32 @@
               <InputLabel>
                 <template #title> 상품 상세 설명 </template>
                 <template #desc>
-                  텍스트 편집기에 내용 입력 및 이미지를 넣어보세요.
+                  <div class="d-flex justify-space-around">
+                    <span>
+                      텍스트 편집기에 내용 입력 및 이미지를 넣어보세요.
+                    </span>
+                    <button
+                      text
+                      class="ml-auto btn-show-html"
+                      @click="contentEditInputShow = !contentEditInputShow"
+                    >
+                      html코드
+                      <span v-if="!contentEditInputShow"> 보기 </span>
+                      <span v-else>숨기기</span>
+                    </button>
+                  </div>
                 </template>
               </InputLabel>
+              <v-textarea
+                v-show="contentEditInputShow"
+                v-model="contentEditInput"
+                class="pb-3"
+                @blur="updateContent"
+                outlined
+                auto-grow
+                hide-details
+              >
+              </v-textarea>
               <HtmlEditor v-model="content" />
             </div>
             <div class="item-material">
@@ -374,6 +397,8 @@ export default {
       // colorCode: '',
       // originContentImages: [],
       content: '',
+      contentEditInput: '',
+      contentEditInputShow: false,
       contentImages: [],
       loading: false,
       fileArr: [],
@@ -444,6 +469,9 @@ export default {
     },
   },
   methods: {
+    updateContent() {
+      this.content = this.contentEditInput;
+    },
     async attachFile(file, optionCode, index) {
       this.errorMsg = '';
       const zipFile = file;
@@ -506,6 +534,7 @@ export default {
       this.item = item;
       this.content = content;
       this.originContent = content;
+      this.contentEditInput = content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
       this.division = division;
@@ -694,6 +723,10 @@ export default {
 </script>
 
 <style scope>
+.btn-show-html {
+  color: #222;
+  text-decoration: underline;
+}
 [text-narrow] {
   line-height: 1.5 !important;
 }

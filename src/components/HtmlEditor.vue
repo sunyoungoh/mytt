@@ -71,9 +71,6 @@ export default {
     editor() {
       return this.$refs.myTextEditor.quill;
     },
-    contentCode() {
-      return hljs.highlightAuto(this.content).value;
-    },
   },
   mounted() {
     this.$nextTick(() => {
