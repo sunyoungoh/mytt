@@ -261,21 +261,21 @@
                   </div>
                 </template>
               </InputLabel>
-							<v-expansion-panel-content>
-	              <v-lazy>
-							    <v-textarea
-								    :key="autoGrowHack"
-		                v-show="contentEditInputShow"
-		                v-model="contentEditInput"
-		                class="pb-3"
-		                @blur="updateContent"
-		                outlined
-		                auto-grow
-		                hide-details
-			            >
-		              </v-textarea>
-								</v-lazy>
-						  </v-expansion-panel-content>
+              <v-expansion-panel-content>
+                <v-lazy>
+                  <v-textarea
+                    :key="autoGrowHack"
+                    v-show="contentEditInputShow"
+                    v-model="contentEditInput"
+                    class="pb-3"
+                    @blur="updateContent"
+                    outlined
+                    auto-grow
+                    hide-details
+                  >
+                  </v-textarea>
+                </v-lazy>
+              </v-expansion-panel-content>
               <HtmlEditor v-model="content" />
             </div>
             <div class="item-material">
