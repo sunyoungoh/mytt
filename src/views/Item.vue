@@ -252,30 +252,28 @@
                     <button
                       text
                       class="ml-auto btn-show-html"
-                      @click="contentEditInputShow = !contentEditInputShow"
+                      @click="
+                        contentEditTextareaShow = !contentEditTextareaShow
+                      "
                     >
                       HTML코드
-                      <span v-if="!contentEditInputShow"> 보기 </span>
+                      <span v-if="!contentEditTextareaShow"> 보기 </span>
                       <span v-else>숨기기</span>
                     </button>
                   </div>
                 </template>
               </InputLabel>
-              <v-expansion-panel-content>
-                <v-lazy>
-                  <v-textarea
-                    :key="autoGrowHack"
-                    v-show="contentEditInputShow"
-                    v-model="contentEditInput"
-                    class="pb-3"
-                    @blur="updateContent"
-                    outlined
-                    auto-grow
-                    hide-details
-                  >
-                  </v-textarea>
-                </v-lazy>
-              </v-expansion-panel-content>
+              <v-textarea
+                v-show="contentEditTextareaShow"
+                v-model="contentEditTextarea"
+                ref="contentEditTextarea"
+                class="pb-3"
+                @blur="updateContent"
+                outlined
+                rows="5"
+                hide-details
+              >
+              </v-textarea>
               <HtmlEditor v-model="content" />
             </div>
             <div class="item-material">
@@ -402,8 +400,9 @@ export default {
       // colorCode: '',
       // originContentImages: [],
       content: '',
-      contentEditInput: '',
-      contentEditInputShow: false,
+      contentEditTextarea: '',
+      contentEditTextareaShow: false,
+      autoGrowHack: false,
       contentImages: [],
       loading: false,
       fileArr: [],
@@ -475,7 +474,7 @@ export default {
   },
   methods: {
     updateContent() {
-      this.content = this.contentEditInput;
+      this.content = this.contentEditTextarea;
     },
     async attachFile(file, optionCode, index) {
       this.errorMsg = '';
@@ -539,7 +538,7 @@ export default {
       this.item = item;
       this.content = content;
       this.originContent = content;
-      this.contentEditInput = content;
+      this.contentEditTextarea = content;
       this.salesCode = this.$route.params.salesCode;
       this.salesStatus = this.$route.params.salesCode;
       this.division = division;
@@ -586,7 +585,6 @@ export default {
           this.selectedSizeUint = { text: '직접입력', value: '' };
         }
       }
-
       // ======== 디지털 작가면 메일 템플릿 정보 패치 ========
       if (this.$store.getters.isDigitalAuthor) {
         this.fetchMailTemplate();
