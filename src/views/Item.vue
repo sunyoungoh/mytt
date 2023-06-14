@@ -275,7 +275,7 @@
 			            >
 		              </v-textarea>
 								</v-lazy>
-						  </v-eexpansion-panel-content>
+						  </v-expansion-panel-content>
               <HtmlEditor v-model="content" />
             </div>
             <div class="item-material">
