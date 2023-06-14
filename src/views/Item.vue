@@ -254,23 +254,28 @@
                       class="ml-auto btn-show-html"
                       @click="contentEditInputShow = !contentEditInputShow"
                     >
-                      html코드
+                      HTML코드
                       <span v-if="!contentEditInputShow"> 보기 </span>
                       <span v-else>숨기기</span>
                     </button>
                   </div>
                 </template>
               </InputLabel>
-              <v-textarea
-                v-show="contentEditInputShow"
-                v-model="contentEditInput"
-                class="pb-3"
-                @blur="updateContent"
-                outlined
-                auto-grow
-                hide-details
-              >
-              </v-textarea>
+							<v-expansion-panel-content>
+	              <v-lazy>
+							    <v-textarea
+								    :key="autoGrowHack"
+		                v-show="contentEditInputShow"
+		                v-model="contentEditInput"
+		                class="pb-3"
+		                @blur="updateContent"
+		                outlined
+		                auto-grow
+		                hide-details
+			            >
+		              </v-textarea>
+								</v-lazy>
+						  </v-eexpansion-panel-content>
               <HtmlEditor v-model="content" />
             </div>
             <div class="item-material">
