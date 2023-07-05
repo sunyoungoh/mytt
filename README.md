@@ -7,8 +7,9 @@
 ## 🪄 기술 스택
 - Vue2
 - Vuetify
-- Quill Editor
-- Supabase
+- crypto-js
+- vue-quill-editor
+- supabase
 
 <br>
 
@@ -24,6 +25,7 @@
 ## 🍀 기능
 - 로그인
   - supabase DB에 등록된 사용자만 로그인 가능
+  - 로그인 시 crpyto-js로 API키 암호화
 - 텐바이텐에 등록된 상품 조회
   - 상품명 검색으로 필터링
 - 상품 상세 페이지 수정
