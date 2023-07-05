@@ -13,7 +13,7 @@
 
 <br>
 
-## API
+## 📚 API
 [텐바이텐 API](https://api.10x10.co.kr/document/docs.html)
 
 <br>
