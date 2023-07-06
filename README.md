@@ -6,6 +6,7 @@
 
 ## 🪄 기술 스택
 - Vue2
+- Vuex
 - Vuetify
 - crypto-js
 - vue-quill-editor
