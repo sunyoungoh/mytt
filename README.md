@@ -135,6 +135,7 @@
 ### 마이페이지
 
 - 네이버 이메일 계정 수정
+- 로그아웃
  
 <img src="https://github.com/sunyoungoh/mytt/assets/52486921/defc5dfe-d62d-45b2-a1ed-cb8e22b1c4c0" width="500px"/>
 
