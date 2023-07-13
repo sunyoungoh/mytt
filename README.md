@@ -55,15 +55,18 @@ https://mytt.netlify.app/
       - 이미지 로딩 시 로딩 스피너 동작
   - 상품명 검색으로 필터링
     - 검색 키워드와 개수, 상품 표시
-#### 📦 Item - 상품 상세 페이지 수정
+#### 📝 Item - 상품 상세 페이지 수정
   - 상품 판매 상태, 구분, 상세내용, 재질, 사이즈 수정
     - Node.js 백엔드 서버를 통해 텐바이텐 API로 요청
   - 상세 내용 quill editor로 작성
     - html 코드 보기 (toggle)
   - 메일 템플릿, 파일 supabase 등록 및 삭제 (디지털 작가만)
+  - 수정 완료 결과는 모달 dialog로 안내
 #### 🛒 Order - 주문 조회 (디지털 작가만)
+  - 신규, 배송 준비중 주문 확인
   - 메일 발송 및 송장 등록
-    - Node.js 백엔드 서버를 통해 `nodemailer`로 메일 발송 후 텐바이텐 API로 송장 등록 처리
+    - supabase에 등록된 템플릿으로 백엔드 서버 메일 발송 요청
+    - 프론트에서 받은 데이터로 `nodemailer`를 통해 메일 발송 후 텐바이텐 API로 송장 등록 처리
 #### 👤 Mypage - 마이페이지
   - 네이버 메일 발송 계정 등록 (디지털 작가만)
   - 로그아웃
@@ -75,7 +78,7 @@ https://mytt.netlify.app/
 
 ## 🎬 시연 영상
 
-### 반응형
+### 📱 반응형
 
 - 홈 화면
 <img src="https://github.com/sunyoungoh/mytt/assets/52486921/7b9cdcdf-3444-4110-8ce4-f89cb10d8a5a" width="500px"/>
@@ -85,14 +88,14 @@ https://mytt.netlify.app/
 
 <br><br>
 
-### 로그인 페이지
+### 🔐 로그인 페이지
 
 - 로그인 과정 (supabase에 등록된 사용자만 로그인 가능)
 <img src="https://github.com/sunyoungoh/mytt/assets/52486921/5c80c73b-5bf5-4b28-a90e-c0785a5795f1" width="500px"/>
 
 <br><br>
 
-### 홈 페이지
+### 🏠 홈 페이지
 
 - 상품명 검색
   
@@ -100,7 +103,7 @@ https://mytt.netlify.app/
 
 <br><br>
 
-### 상품 수정 페이지
+### 📝 상품 수정 페이지
 
 - 상품 내용 수정
 
@@ -125,7 +128,7 @@ https://mytt.netlify.app/
 
 <br><br>
 
-### 주문 내역 (디지털 작가만 보임)
+### 🛒 주문 내역 (디지털 작가만 보임)
 
 - 주문 확인
 
@@ -137,7 +140,7 @@ https://mytt.netlify.app/
 
 <br><br>
 
-### 마이페이지
+### 👤 마이페이지
 
 - 네이버 이메일 계정 수정
 - 로그아웃
