@@ -43,7 +43,7 @@ export default {
     this.$nextTick(async () => {
       this.$store.dispatch('fetchNaverAuth'); // 발송 메일 정보 패치
       await getNewOrders(); // 신규 주문 조회
-      let { data } = await getReadyOrders(); // 배송 준비 중 주문 조회
+      const { data } = await getReadyOrders(); // 배송 준비 중 주문 조회
       this.orderList = data;
     });
   },
