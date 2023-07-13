@@ -39,7 +39,7 @@ https://mytt.netlify.app/
 
 ## 🍀 기능
 > 페이지 단위 설명
-##### Login - 로그인
+#### Login - 로그인
   - supabase DB에 등록된 사용자만 로그인 가능
   - 로그인 시 crpyto-js로 API키 암호화
   - Vuetify v-form validation 기능
@@ -47,7 +47,7 @@ https://mytt.netlify.app/
     - 로그인하기 버튼 disabled
   - Node.js 백엔드 서버로 api키 확인 요청 후 로그인 처리
   - Navigation Guards 사용으로 미 로그인 시 타 페이지 접근 불가
-##### Home - 텐바이텐에 등록된 상품 조회, 검색
+#### Home - 텐바이텐에 등록된 상품 조회, 검색
   - 상품이미지, 상품명, 판매상태 표시
     - 로그인 후 홈 화면 진입 시 vuex actions의 `fetchItem()`를 통해 state에 상품 리스트 저장
       - 한 번에 100개씩만 요청할 수 있어서 while문을 통해 push
@@ -55,16 +55,16 @@ https://mytt.netlify.app/
       - 이미지 로딩 시 로딩 스피너 동작
   - 상품명 검색으로 필터링
     - 검색 키워드와 개수, 상품 표시
-##### Item - 상품 상세 페이지 수정
+#### Item - 상품 상세 페이지 수정
   - 상품 판매 상태, 구분, 상세내용, 재질, 사이즈 수정
     - Node.js 백엔드 서버를 통해 텐바이텐 API로 요청
   - 상세 내용 quill editor로 작성
     - html 코드 보기 (toggle)
   - 메일 템플릿, 파일 supabase 등록 및 삭제 (디지털 작가만)
-##### Order - 주문 조회 (디지털 작가만)
+#### Order - 주문 조회 (디지털 작가만)
   - 메일 발송 및 송장 등록
     - Node.js 백엔드 서버를 통해 `nodemailer`로 메일 발송 후 텐바이텐 API로 송장 등록 처리
-##### Mypage - 마이페이지
+#### Mypage - 마이페이지
   - 네이버 메일 발송 계정 등록 (디지털 작가만)
   - 로그아웃
 
