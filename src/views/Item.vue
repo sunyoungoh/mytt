@@ -620,7 +620,7 @@ export default {
 
       try {
         // 메일 템플릿 등록
-        const templateResult = await supabase.from('mail').upsert(
+        const { status } = await supabase.from('mail').upsert(
           {
             brand_id: this.item.brandId,
             item_id: this.item.itemid,
@@ -629,8 +629,7 @@ export default {
           { onConflict: 'item_id' },
         );
 
-        console.log('템플릿 등록 결과', templateResult);
-        if (templateResult.status !== 201) return (this.result = 'fail');
+        if (status !== 201) return (this.result = 'fail');
 
         // 서버 zip 첨부 파일 등록
         this.fileArr.map(async item => {
@@ -649,12 +648,9 @@ export default {
           }
         });
 
-        // 텐바이텐 상세페이지 수정
-        let statusResult = '';
-        let infoEditResult = '';
-        // let imageEditResult = '';
-
+        // ========= 텐바이텐 상세페이지 수정 =========
         // 상품 판매상태 수정
+        let statusResult;
         if (this.salesStatus !== this.$route.params.salesCode) {
           const { status } = await updateItemStatus(
             this.item.itemid,
@@ -680,7 +676,8 @@ export default {
         // }
 
         // 텐바이텐 상품 정보 수정 api 호출
-        const { status } = await updateItemInfo({
+
+        const { status: infoEditResult } = await updateItemInfo({
           itemId: this.item.itemid,
           content: this.content,
           division: this.division,
@@ -689,7 +686,6 @@ export default {
           sizeUnit: this.selectedSizeUint.value,
           material: this.material,
         });
-        infoEditResult = status;
 
         // 결과 dialog에 반영할 값 저장
         this.result =
@@ -711,7 +707,7 @@ export default {
       this.fetchItem();
     },
     openUrl() {
-      let url = `
+      const url = `
       http://www.10x10.co.kr/shopping/category_prd.asp?itemid=${this.item.itemid}&disp=${this.item.categories[0].catecode}&pBtr=${this.item.brandId}
       `;
       window.open(url, '_blank', 'noreferrer');
