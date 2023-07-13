@@ -144,7 +144,7 @@ https://mytt.netlify.app/
 
 ![image](https://github.com/sunyoungoh/mytt/assets/52486921/b20a5cd6-3e8f-4e07-9e5a-395f7e327ac6)
 
-- 메일 발송을 기능을 위한 안내문 제공
+- 메일 발송 기능을 위한 안내문 제공
 
 ![IMB_snPCmj](https://github.com/sunyoungoh/mytt/assets/52486921/800d5224-bfd2-4c56-90d2-bcdf2c4b7076)
 
