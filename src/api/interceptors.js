@@ -1,24 +1,24 @@
 import store from '@/store/index';
 
-export function setInterceptors(instance) {
+export const setInterceptors = instance => {
   // Add a request interceptor
   instance.interceptors.request.use(
-    function (config) {
+    config => {
       config.headers.Authorization = store.state.apiKey;
       return config;
     },
-    function (error) {
+    error => {
       return Promise.reject(error);
     },
   );
 
   instance.interceptors.response.use(
-    function (response) {
+    response => {
       return response;
     },
-    function (error) {
+    error => {
       return Promise.reject(error);
     },
   );
   return instance;
-}
+};

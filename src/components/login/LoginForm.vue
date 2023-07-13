@@ -67,28 +67,34 @@ export default {
       // 빈칸 있나 확인
       await this.validate();
       // 빈칸이 없으면 로그인 실행
-      if (this.valid == true) {
+      if (this.valid) {
         this.loading = true;
         try {
           // supabase에 등록된 사용자인지 확인
-          let { data } = await supabase
+          const { data: userInfo } = await supabase
             .from('user')
             .select()
             .eq('brand_id', this.brandId);
-          const userInfo = data[0];
 
           // 등록된 사용자가 맞다면
-          if (data.length) {
+          if (userInfo.length) {
+            // 디지털 작가 여부 확인
+            const digitalAuthor = userInfo[0].digital_author;
             // apiKey 암호화
             const apiKey = getEncodeKey(this.apiKey.trim());
-            // 브랜드 정보 가져오기
-            let res = await getBrandInfo(apiKey);
-            if (res.status == 200 && res.data.brandid == this.brandId) {
+            // apiKey로 브랜드 정보 가져오기
+            const {
+              status,
+              data: { brandid, BrandNameKor },
+            } = await getBrandInfo(apiKey);
+
+            // 텐바이텐 브랜드 정보가 있고, 입력한 브랜드 아이디와 일치할 시 로그인 처리
+            if (status == 200 && brandid == this.brandId) {
               this.$store.dispatch('login', {
                 apiKey: apiKey,
-                brandId: res.data.brandid,
-                brandName: res.data.BrandNameKor,
-                digitalAuthor: userInfo.digital_author,
+                brandId: brandid,
+                brandName: BrandNameKor,
+                digitalAuthor: digitalAuthor,
               });
               this.$router.push({ path: '/' });
             }
@@ -96,7 +102,6 @@ export default {
             this.errorMsg = '등록된 회원이 아닙니다.';
           }
         } catch (error) {
-          console.log(error);
           if (error.response.data.status == 401) {
             this.errorMsg = '키 생성 후 1시간 안에 반영됩니다!';
           } else {

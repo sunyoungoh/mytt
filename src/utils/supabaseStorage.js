@@ -54,7 +54,7 @@ export const uploadFile = async (zipFile, optionCode, brandId, itemId) => {
       const searchFileName = `${brandId}_${itemId}_${optionCode}`;
 
       // 기존 파일 찾기
-      let beforeFiles = await supabase.storage.from(bucket).list(brandId, {
+      const beforeFiles = await supabase.storage.from(bucket).list(brandId, {
         offset: 1,
         sortBy: { column: 'updated_at', order: 'desc' },
         search: searchFileName,

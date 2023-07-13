@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     async fetchItem() {
-      let { data } = await getItem(this.itemId);
+      const { data } = await getItem(this.itemId);
       this.item = data.outPutValue;
     },
   },

@@ -488,7 +488,7 @@ export default {
     },
 
     async downloadFile(optionCode) {
-      let { result, publicUrl } = await downloadFile(
+      const { result, publicUrl } = await downloadFile(
         this.item.brandId,
         this.item.itemid,
         optionCode,
@@ -504,7 +504,7 @@ export default {
     },
 
     async deleteFile(optionCode) {
-      let result = await deleteFile(
+      const result = await deleteFile(
         this.item.brandId,
         this.item.itemid,
         optionCode,
@@ -635,7 +635,7 @@ export default {
         // 서버 zip 첨부 파일 등록
         this.fileArr.map(async item => {
           if (item.zipFile) {
-            let result = await uploadFile(
+            const result = await uploadFile(
               item.zipFile,
               item.optionCode,
               this.item.brandId,
@@ -656,8 +656,11 @@ export default {
 
         // 상품 판매상태 수정
         if (this.salesStatus !== this.$route.params.salesCode) {
-          let data = await updateItemStatus(this.item.itemid, this.salesStatus);
-          statusResult = data.status;
+          const { status } = await updateItemStatus(
+            this.item.itemid,
+            this.salesStatus,
+          );
+          statusResult = status;
         }
 
         // 상품 상세 이미지 수정 (api 요청 결과는 성공했다고 돌아오나 아이템 정보를 불러왔을 때는 저장이 안되어있음)
@@ -677,7 +680,7 @@ export default {
         // }
 
         // 텐바이텐 상품 정보 수정 api 호출
-        let { status } = await updateItemInfo({
+        const { status } = await updateItemInfo({
           itemId: this.item.itemid,
           content: this.content,
           division: this.division,

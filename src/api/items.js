@@ -15,6 +15,7 @@ const getItems = count => {
     },
   });
 };
+
 const getItem = id => {
   return instanceAuth.get(`/tenbyten/items/${id}`);
 };
