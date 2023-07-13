@@ -1,6 +1,6 @@
 <template>
   <v-card height="100%" elevation="0">
-    <BasicImage :src="item.images?.basicImage" class="basic-img" />
+    <BasicImage :src="imageUrl" class="basic-img" />
     <v-card-title class="pt-2 pb-5 px-0 card-title d-block">
       {{ itemName }}
       <SalesChip :salesCode="salesCode" class="mt-1" />
@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      item: '',
+      imageUrl: '',
     };
   },
   watch: {
@@ -45,7 +45,9 @@ export default {
   methods: {
     async fetchItem() {
       const { data } = await getItem(this.itemId);
-      this.item = data.outPutValue;
+      if (data) {
+        this.imageUrl = data.outPutValue.images?.basicImage;
+      }
     },
   },
 };

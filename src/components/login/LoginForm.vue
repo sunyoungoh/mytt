@@ -33,10 +33,10 @@
             class="font-weight-medinum"
             @click="login"
             :loading="loading"
+            :disabled="!valid"
             x-large
             block
             color="primary"
-            dark
             elevation="0"
             height="56"
             >로그인하기

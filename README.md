@@ -2,6 +2,9 @@
 
 텐바이텐에 입점된 판매자가 판매 상태와 상품 상세 페이지 내용을 수정할 수 있고, 디지털 작가 시 신규 주문 내역을 확인 및 상품 파일, 메일 템플릿을 등록할 수 있는 서비스입니다.
 
+![image](https://github.com/sunyoungoh/mytt/assets/52486921/2d7bd53f-3803-4d04-b5fc-48e8b46084df)
+
+
 <br>
 
 ## 🪄 기술 스택
@@ -10,8 +13,10 @@
 - Vuetify
 - crypto-js
 - vue-quill-editor
-- supabase
+<br>
 
+- supabase
+- Node.js (express) [🔗 GitHub Link](https://github.com/sunyoungoh/send-mail-server)
 <br>
 
 ## 📚 API
@@ -23,27 +28,39 @@
 친구와 함께 텐바이텐 상품 이미지 등록 시 html 코드 등록 방식을 사용 중이었는데, 링크를 가져오는 사이트인 이글루스라는 블로그 서비스가 종료되어 새로운 이미지 호스팅 사이트가 필요하게 되었습니다.
 이미지 호스팅 사이트를 찾아 교체해도 되지만 어드민 로그인의 번거로움, 상품 하나 수정을 위해 여러번의 클릭. 이 과정을 단순화 해보고 싶어 개발을 하게 되었습니다.
 친구는 코딩을 잘 모르는 친구라서 시각화 하는 것이 좋다는 판단이 들어 `quill editor`를 사용하기로 결정하였고, 에디터 안의 이미지를 서버리스 `supabase`의 storage에 등록되도록 만들었습니다.
+이외의 기본적인 상품 내용 수정은 직접 구축한 Node.js 서버를 통해 처리합니다.
 
-![image](https://github.com/sunyoungoh/mytt/assets/52486921/2d7bd53f-3803-4d04-b5fc-48e8b46084df)
-
-
+<br>
 
 ## 🍀 기능
-- 로그인
+> 페이지 단위 설명
+##### Login - 로그인
   - supabase DB에 등록된 사용자만 로그인 가능
   - 로그인 시 crpyto-js로 API키 암호화
-  - 네비게이션가드 사용으로 미 로그인 시 타 페이지 접근 불가
-- 텐바이텐에 등록된 상품 조회
+  - Vuetify v-form validation 기능
+    - 필드가 비어있을 시 에러 메시지 표시
+    - 로그인하기 버튼 disabled
+  - Node.js 백엔드 서버로 api키 확인 요청 후 로그인 처리
+  - Navigation Guards 사용으로 미 로그인 시 타 페이지 접근 불가
+##### Home - 텐바이텐에 등록된 상품 조회, 검색
+  - 상품이미지, 상품명, 판매상태 표시
+    - 로그인 후 홈 화면 진입 시 vuex actions의 `fetchItem()`를 통해 state에 상품 리스트 저장
+      - 한 번에 100개씩만 요청할 수 있어서 while문을 통해 push
+    - 이미지는 fetchItems 결과에 포함되지 않아 `ItemCard` 컴포넌트에서 별도 api 요청
+      - 이미지 로딩 시 로딩 스피너 동작
   - 상품명 검색으로 필터링
-- 상품 상세 페이지 수정
+    - 검색 키워드와 개수, 상품 표시
+##### Item - 상품 상세 페이지 수정
   - 상품 판매 상태, 구분, 상세내용, 재질, 사이즈 수정
+    - Node.js 백엔드 서버를 통해 텐바이텐 API로 요청
   - 상세 내용 quill editor로 작성
     - html 코드 보기 (toggle)
   - 메일 템플릿, 파일 supabase 등록 및 삭제 (디지털 작가만)
-- 주문 조회 (디지털 작가만)
+##### Order - 주문 조회 (디지털 작가만)
   - 메일 발송 및 송장 등록
-- 마이페이지
-  - 네이버 메일 발송 계정 등록
+    - Node.js 백엔드 서버를 통해 `nodemailer`로 메일 발송 후 텐바이텐 API로 송장 등록 처리
+##### Mypage - 마이페이지
+  - 네이버 메일 발송 계정 등록 (디지털 작가만)
   - 로그아웃
 
 
